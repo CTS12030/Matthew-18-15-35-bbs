@@ -1181,6 +1181,37 @@
     updateCarousel();
   </script>
 
-  <script src="assets/runtime.js"></script>
+  <script>
+  // On mobile (<=820px): use a lightweight hash navigator instead of the full
+  // runtime.js which clones all slides into an overview grid and crashes iOS.
+  if (window.innerWidth > 820) {
+    var rs = document.createElement('script');
+    rs.src = 'assets/runtime.js';
+    document.body.appendChild(rs);
+  } else {
+    (function() {
+      var deck = document.querySelector('.deck');
+      if (!deck) return;
+      var slides = Array.from(deck.querySelectorAll('.slide'));
+      var total = slides.length;
+      function go(n) {
+        n = Math.max(0, Math.min(total - 1, n));
+        slides.forEach(function(s, i) {
+          s.classList.toggle('is-active', i === n);
+          s.classList.toggle('is-prev', i < n);
+        });
+        var h = '#/' + (n + 1);
+        if (location.hash !== h) history.replaceState(null, '', h);
+      }
+      function fromHash() {
+        var m = /^#\/(\d+)/.exec(location.hash || '');
+        if (m) go(Math.max(0, parseInt(m[1], 10) - 1));
+        else go(0);
+      }
+      window.addEventListener('hashchange', fromHash);
+      fromHash();
+    })();
+  }
+  </script>
 </body>
 </html>
