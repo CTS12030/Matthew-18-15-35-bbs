@@ -14,6 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flipclock@^1/dist/FlipClock.umd.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -166,6 +167,45 @@
     .slide.qa .answer-container ul { font-size: 1.2rem !important; line-height: 1.6 !important; }
     .slide.qa .answer-container { max-height: 42vh !important; }
 
+    /* ===== Shared timer wrapper ===== */
+    .timer-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; user-select: none; transition: transform .2s; }
+    .timer-wrap:hover { transform: scale(1.04); }
+    .timer-wrap .timer-hint { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .7; transition: opacity .4s; }
+    .timer-wrap.running .timer-hint { opacity: 0; pointer-events: none; }
+
+    /* ===== Timer 1: FlipClock.js warm terracotta ===== */
+    #timer-flip .flip-clock { --fc-digit-color: #fff; --fc-digit-bg: linear-gradient(180deg, #c85a49 0%, #a34538 100%);
+      --fc-shadow: 0 6px 20px rgba(160,50,30,.4); --fc-border-radius: 10px; --fc-font-family: 'Noto Sans SC', sans-serif; }
+
+    /* ===== Timer 2: Apple Watch ring ===== */
+    .aw-timer { position: relative; width: 120px; height: 120px; }
+    .aw-timer svg { transform: scaleX(-1); }
+    .aw-timer__track { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 6; }
+    .aw-timer__ring  { fill: none; stroke-width: 6; stroke-linecap: round;
+      stroke: url(#aw-grad); transition: stroke-dasharray 1s linear; transform: rotate(90deg); transform-origin: center; }
+    .aw-timer__label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif; color: #fff; }
+    .aw-timer__time { font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+    .aw-timer__sub  { font-size: 9px; color: rgba(255,255,255,.6); margin-top: 3px; letter-spacing: .12em; text-transform: uppercase; }
+    .aw-timer-card { background: rgba(20,20,22,.72); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 28px; padding: 14px 22px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08); }
+
+    /* ===== Timer 3: Glassmorphism ===== */
+    .glass-timer-card { position: relative; overflow: hidden; border-radius: 22px; padding: 16px 28px;
+      background: rgba(255,247,239,.18); backdrop-filter: blur(28px) saturate(1.3); -webkit-backdrop-filter: blur(28px) saturate(1.3);
+      border: 1px solid rgba(255,255,255,.28);
+      box-shadow: 0 16px 48px rgba(60,30,10,.3), inset 0 1px 0 rgba(255,255,255,.22); }
+    .glass-timer-card .orb { position: absolute; border-radius: 50%; filter: blur(30px); opacity: .55; pointer-events: none; animation: orbFloat 6s ease-in-out infinite alternate; }
+    .glass-timer-card .orb-1 { width: 70px; height: 70px; background: rgba(122,138,102,.6); top: -18px; left: -12px; }
+    .glass-timer-card .orb-2 { width: 50px; height: 50px; background: rgba(242,163,65,.5); bottom: -14px; right: -6px; animation-delay: -3s; }
+    @keyframes orbFloat { 0% { transform: translate(0,0); } 100% { transform: translate(12px, -10px); } }
+    .glass-timer__digits { position: relative; z-index: 1; display: flex; align-items: baseline; gap: 4px;
+      font-family: 'Noto Serif SC', Georgia, serif; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.4); }
+    .glass-timer__digits .gt-num { font-size: 38px; font-weight: 700; min-width: 1.1ch; text-align: center; }
+    .glass-timer__digits .gt-sep { font-size: 28px; font-weight: 300; opacity: .6; animation: sepBlink 1s step-end infinite; }
+    @keyframes sepBlink { 50% { opacity: 0; } }
+
     @media (prefers-reduced-motion: reduce) {
       .slide-bg { will-change: auto; }
       #intro-scrollcue .dot::after { animation: none; }
@@ -211,6 +251,9 @@
       .slide.ov .qrow > span:first-child { width: 1.5rem !important; height: 1.5rem !important; font-size: 0.85rem !important; }
       .slide.qa .slide-content h2 { font-size: clamp(1.2rem, 5vw, 1.6rem) !important; line-height: 1.45 !important; }
       .slide.qa .answer-container ul { font-size: 1rem !important; }
+      /* Timers: scale down on mobile */
+      .timer-wrap { transform: scale(0.75); transform-origin: center; }
+      .timer-wrap:hover { transform: scale(0.78); }
     }
   </style>
 </head>
@@ -337,6 +380,13 @@
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-terracotta text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">5</span><p class="text-warmText1 text-xs md:text-sm font-medium">第三步“告诉教会”是什么意思？</p></div>
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-terracotta text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">6</span><p class="text-warmText1 text-xs md:text-sm font-medium">最后“看他像外邦人和税吏”是什么意思？为什么强调教会必须处理罪？</p></div>
             </div>
+          </div>
+        </div>
+        <!-- Timer 1: FlipClock.js -->
+        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
+          <div class="timer-wrap" id="timer-flip" onclick="event.stopPropagation();startTimer1(this)">
+            <div id="timer1-mount"></div>
+            <span class="timer-hint">点击开始讨论计时 (15分钟)</span>
           </div>
         </div>
       </div>
@@ -515,6 +565,25 @@
             </div>
           </div>
         </div>
+        <!-- Timer 2: Apple Watch ring -->
+        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
+          <div class="timer-wrap" id="timer-aw-wrap" onclick="event.stopPropagation();startTimer2(this)">
+            <div class="aw-timer-card">
+              <div class="aw-timer" id="timer-aw">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <defs><linearGradient id="aw-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fc9f5b"/><stop offset="100%" stop-color="#e36a2d"/></linearGradient></defs>
+                  <circle class="aw-timer__track" cx="50" cy="50" r="45"/>
+                  <path class="aw-timer__ring" id="aw-ring" stroke-dasharray="283 283" d="M 50,50 m -45,0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"/>
+                </svg>
+                <div class="aw-timer__label">
+                  <span class="aw-timer__time" id="aw-time">15:00</span>
+                  <span class="aw-timer__sub">讨论</span>
+                </div>
+              </div>
+            </div>
+            <span class="timer-hint">点击开始讨论计时</span>
+          </div>
+        </div>
       </div>
       <div class="notes">第二部分经文与问题，重点理解与前文处理罪的上下文联系。</div>
     </section>
@@ -645,6 +714,21 @@
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">4</span><p class="text-warmText1 text-xs md:text-sm font-medium">为什么不饶恕是如此严重的罪？圣经其他地方怎么说？</p></div>
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">5</span><p class="text-warmText1 text-xs md:text-sm font-medium">“从心里饶恕”是什么意思？我们该如何行？</p></div>
             </div>
+          </div>
+        </div>
+        <!-- Timer 3: Glassmorphism -->
+        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
+          <div class="timer-wrap" id="timer-glass-wrap" onclick="event.stopPropagation();startTimer3(this)">
+            <div class="glass-timer-card">
+              <div class="orb orb-1"></div>
+              <div class="orb orb-2"></div>
+              <div class="glass-timer__digits" id="glass-digits">
+                <span class="gt-num" id="gt-m1">1</span><span class="gt-num" id="gt-m2">5</span>
+                <span class="gt-sep">:</span>
+                <span class="gt-num" id="gt-s1">0</span><span class="gt-num" id="gt-s2">0</span>
+              </div>
+            </div>
+            <span class="timer-hint">点击开始讨论计时</span>
           </div>
         </div>
       </div>
@@ -1179,6 +1263,84 @@
       armIntroGesture();
     }
     updateCarousel();
+
+    /* ========== Discussion Timers (click-to-start, 15 min each) ========== */
+    const TIMER_SECS = 15 * 60;
+
+    // --- Timer 1: FlipClock.js (terracotta flip counter) ---
+    let fc1;
+    (function initFlip() {
+      const { counter, css, flipClock, theme } = FlipClock;
+      fc1 = flipClock({
+        parent: document.getElementById('timer1-mount'),
+        autoStart: false,
+        face: counter({
+          value: TIMER_SECS,
+          targetValue: 0,
+          countdown: true,
+          format: function(v) {
+            var m = Math.floor(Math.max(0, v) / 60);
+            var s = Math.max(0, v) % 60;
+            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+          }
+        }),
+        theme: theme({
+          dividers: ':',
+          css: css({ fontSize: '2.2rem' })
+        })
+      });
+    })();
+    function startTimer1(el) {
+      if (el.classList.contains('running')) return;
+      el.classList.add('running');
+      fc1.start();
+    }
+
+    // --- Timer 2: Apple Watch SVG ring ---
+    let aw2 = { left: TIMER_SECS, iv: null };
+    function startTimer2(el) {
+      if (el.classList.contains('running')) return;
+      el.classList.add('running');
+      const ring = document.getElementById('aw-ring');
+      const label = document.getElementById('aw-time');
+      const FULL = 283;
+      aw2.iv = setInterval(function() {
+        aw2.left--;
+        if (aw2.left < 0) { aw2.left = 0; clearInterval(aw2.iv); }
+        var frac = aw2.left / TIMER_SECS;
+        frac = frac - (1 / TIMER_SECS) * (1 - frac);
+        ring.setAttribute('stroke-dasharray', (Math.max(0, frac) * FULL).toFixed(1) + ' 283');
+        var m = Math.floor(aw2.left / 60), s = aw2.left % 60;
+        label.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        if (aw2.left <= 60) ring.style.stroke = '#f85149';
+        else if (aw2.left <= 180) ring.style.stroke = '#f0883e';
+      }, 1000);
+    }
+
+    // --- Timer 3: Glassmorphism digits ---
+    let gt3 = { left: TIMER_SECS, iv: null };
+    function updateGlass() {
+      var m = Math.floor(Math.max(0, gt3.left) / 60), s = Math.max(0, gt3.left) % 60;
+      var ms = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+      document.getElementById('gt-m1').textContent = ms[0];
+      document.getElementById('gt-m2').textContent = ms[1];
+      document.getElementById('gt-s1').textContent = ss[0];
+      document.getElementById('gt-s2').textContent = ss[1];
+    }
+    function startTimer3(el) {
+      if (el.classList.contains('running')) return;
+      el.classList.add('running');
+      gt3.iv = setInterval(function() {
+        gt3.left--;
+        if (gt3.left < 0) { gt3.left = 0; clearInterval(gt3.iv); }
+        updateGlass();
+        if (gt3.left <= 60) {
+          document.getElementById('glass-digits').style.color = '#f85149';
+        } else if (gt3.left <= 180) {
+          document.getElementById('glass-digits').style.color = '#f0883e';
+        }
+      }, 1000);
+    }
   </script>
 
   <script>
