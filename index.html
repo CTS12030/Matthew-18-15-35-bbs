@@ -152,6 +152,19 @@
     /* ===== Answer container ===== */
     .answer-container { opacity: 0; }
 
+    /* ===== +30% typography on chapter (.ov) & question (.qa) slides ===== */
+    .slide.ov h3 { font-size: 1.46rem !important; }
+    .slide.ov .leading-relaxed,
+    .slide.ov .leading-relaxed p { font-size: 1.2rem !important; }
+    .slide.ov .qrow p { font-size: 1.12rem !important; line-height: 1.55 !important; }
+    .slide.ov .qrow span.rounded-full,
+    .slide.ov .qrow > span:first-child { width: 1.7rem !important; height: 1.7rem !important; font-size: 0.95rem !important; }
+    .slide.qa .slide-content h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem) !important; line-height: 1.5 !important; }
+    .slide.qa .slide-content h2 + p { font-size: 1.05rem !important; }
+    .slide.qa .answer-container h4 { font-size: 1.08rem !important; }
+    .slide.qa .answer-container ul { font-size: 1.2rem !important; line-height: 1.6 !important; }
+    .slide.qa .answer-container { max-height: 42vh !important; }
+
     @media (prefers-reduced-motion: reduce) {
       .slide-bg { will-change: auto; }
       #intro-scrollcue .dot::after { animation: none; }
@@ -257,10 +270,10 @@
     </section>
 
     <!-- ============ S1 OVERVIEW: 经文 + 全部问题 ============ -->
-    <section class="slide" data-title="第一部分：经文与讨论" data-section="第一部分·挽回">
+    <section class="slide ov" data-title="第一部分：经文与讨论" data-section="第一部分·挽回">
       <img class="slide-bg" src="assets/bg_s1_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
-      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-stretch">
+      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-center content-center">
         <div class="md:col-span-5 glass parchment rounded-2xl p-6 flex flex-col overflow-hidden" data-in>
           <div class="flex items-center gap-2 border-b border-terracotta/20 pb-3 mb-4"><span class="text-terracotta text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:15-17</h3></div>
           <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 font-serif text-warmText1 text-sm md:text-base leading-relaxed space-y-4">
@@ -292,9 +305,9 @@
     <section class="slide qa" data-title="第一部分：问题 1" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 1 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 1 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">马太 18:15–17 里，耶稣给了哪几个处理弟兄犯罪的步骤？你觉得这几个步骤的目的是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15-17</p>
@@ -310,7 +323,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">引导大家先复述步骤，强调目的是挽回而非惩罚。</div>
     </section>
@@ -319,9 +331,9 @@
     <section class="slide qa" data-title="第一部分：问题 2" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 2 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 2 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">“他若听你，你便得了你的弟兄”，这句话说明处理罪的目标是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15</p>
@@ -335,7 +347,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">强调福音的核心是挽回，不是定罪。</div>
     </section>
@@ -344,9 +355,9 @@
     <section class="slide qa" data-title="第一部分：问题 3" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q3.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 3 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 3 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第一步是“只有他和你在一处”的目的是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15</p>
@@ -360,7 +371,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">私下、温柔、保护，是挽回的第一原则。</div>
     </section>
@@ -369,9 +379,9 @@
     <section class="slide qa" data-title="第一部分：问题 4" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 4 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 4 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第二步为什么要带一两个人同去？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:16</p>
@@ -385,7 +395,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">见证人是为了公正与挽回，不是为了施压。</div>
     </section>
@@ -394,9 +403,9 @@
     <section class="slide qa" data-title="第一部分：问题 5" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q5.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 5 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 5 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第三步“告诉教会”是什么意思？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
@@ -410,7 +419,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">教会的参与是为了挽回，不是审判秀。</div>
     </section>
@@ -419,9 +427,9 @@
     <section class="slide qa" data-title="第一部分：问题 6" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q6.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 6 / 6</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 6 / 6</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">最后“看他像外邦人和税吏”是什么意思？为什么这么强调教会必须处理罪？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
@@ -436,16 +444,15 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-terracotta text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">本部分收尾，强调处理罪与保护圣洁的关系。</div>
     </section>
 
     <!-- ============ S2 OVERVIEW ============ -->
-    <section class="slide" data-title="第二部分：经文与讨论" data-section="第二部分·权柄">
+    <section class="slide ov" data-title="第二部分：经文与讨论" data-section="第二部分·权柄">
       <img class="slide-bg" src="assets/bg_s2_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
-      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-stretch">
+      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-center content-center">
         <div class="md:col-span-5 glass parchment rounded-2xl p-6 flex flex-col overflow-hidden" data-in>
           <div class="flex items-center gap-2 border-b border-warmAccent/20 pb-3 mb-4"><span class="text-warmAccent text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:18-20</h3></div>
           <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 font-serif text-warmText1 text-sm md:text-base leading-relaxed space-y-4">
@@ -475,9 +482,9 @@
     <section class="slide qa" data-title="第二部分：问题 1" data-section="第二部分·权柄" data-accent="warmAccent">
       <img class="slide-bg" src="assets/bg_s2_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 1 / 4</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 1 / 4</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">这段为什么会突然出现在这里？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:18-20</p>
@@ -491,7 +498,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-warmAccent text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">这段是在回答教会处理罪的权柄从何而来。</div>
     </section>
@@ -500,9 +506,9 @@
     <section class="slide qa" data-title="第二部分：问题 2" data-section="第二部分·权柄" data-accent="warmAccent">
       <img class="slide-bg" src="assets/bg_s2_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 2 / 4</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 2 / 4</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">18 节：“凡你们在地上所捆绑的，在天上也要捆绑；所释放的，在天上也要释放。”这里的“捆绑”和“释放”是什么意思？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:18</p>
@@ -517,7 +523,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-warmAccent text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">务必纠正“捆绑释放”的流行误用，回到上下文。</div>
     </section>
@@ -526,9 +531,9 @@
     <section class="slide qa" data-title="第二部分：问题 3" data-section="第二部分·权柄" data-accent="warmAccent">
       <img class="slide-bg" src="assets/bg_s2_q3.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 3 / 4</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 3 / 4</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">19 节：“若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。”这里是指任何愿望吗？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:19</p>
@@ -542,7 +547,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-warmAccent text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">同心合意是在教会纪律与恢复的语境里。</div>
     </section>
@@ -551,9 +555,9 @@
     <section class="slide qa" data-title="第二部分：问题 4" data-section="第二部分·权柄" data-accent="warmAccent">
       <img class="slide-bg" src="assets/bg_s2_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 4 / 4</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 4 / 4</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">20 节：“有两三个人奉我的名聚会，那里就有我在他们中间。”这里的原意和重点是什么？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:20</p>
@@ -568,16 +572,15 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-warmAccent text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">收束第二部分：基督的同在带来敬畏与勇气。</div>
     </section>
 
     <!-- ============ S3 OVERVIEW ============ -->
-    <section class="slide" data-title="第三部分：经文与讨论" data-section="第三部分·饶恕">
+    <section class="slide ov" data-title="第三部分：经文与讨论" data-section="第三部分·饶恕">
       <img class="slide-bg" src="assets/bg_s3_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
-      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-stretch">
+      <div class="slide-content grid grid-cols-1 md:grid-cols-12 gap-5 p-6 md:p-10 items-center content-center">
         <div class="md:col-span-5 glass parchment rounded-2xl p-6 flex flex-col overflow-hidden" data-in>
           <div class="flex items-center gap-2 border-b border-sageGreen/25 pb-3 mb-3"><span class="text-sageGreen text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:21-35</h3></div>
           <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 font-serif text-warmText1 text-[11px] md:text-[13px] leading-relaxed space-y-3">
@@ -612,9 +615,9 @@
     <section class="slide qa" data-title="第三部分：问题 1" data-section="第三部分·饶恕" data-accent="sageGreen">
       <img class="slide-bg" src="assets/bg_s3_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 1 / 5</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 1 / 5</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">彼得问“到七次可以吗”，为什么他觉得七次已经很多？“七十个七次”是不是代表第 491 次就可以不饶恕？</h2>
             <p class="text-sageGreen text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:21-22</p>
@@ -628,7 +631,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-sageGreen text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">饶恕不是数次数，而是没有上限。</div>
     </section>
@@ -637,9 +639,9 @@
     <section class="slide qa" data-title="第三部分：问题 2" data-section="第三部分·饶恕" data-accent="sageGreen">
       <img class="slide-bg" src="assets/bg_s3_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 2 / 5</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 2 / 5</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">比喻中“一千万银子”和“十两银子”分别代表什么？</h2>
             <p class="text-sageGreen text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:24, 28</p>
@@ -653,7 +655,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-sageGreen text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">用数字对比帮助大家感受恩典之大。</div>
     </section>
@@ -662,9 +663,9 @@
     <section class="slide qa" data-title="第三部分：问题 3" data-section="第三部分·饶恕" data-accent="sageGreen">
       <img class="slide-bg" src="assets/bg_s3_q3.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 3 / 5</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 3 / 5</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">为什么主人称那个不饶恕人的仆人为“恶仆”？</h2>
             <p class="text-sageGreen text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:32-33</p>
@@ -678,7 +679,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-sageGreen text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">恶在于只要恩典却不愿传递恩典。</div>
     </section>
@@ -687,9 +687,9 @@
     <section class="slide qa" data-title="第三部分：问题 4" data-section="第三部分·饶恕" data-accent="sageGreen">
       <img class="slide-bg" src="assets/bg_s3_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 4 / 5</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 4 / 5</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">为什么不饶恕是严重的罪？</h2>
             <p class="text-sageGreen text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:34-35</p>
@@ -704,7 +704,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-sageGreen text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">不饶恕直接违背我们所领受的福音。</div>
     </section>
@@ -713,9 +712,9 @@
     <section class="slide qa" data-title="第三部分：问题 5" data-section="第三部分·饶恕" data-accent="sageGreen">
       <img class="slide-bg" src="assets/bg_s3_q5.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
-      <div class="slide-content flex flex-col p-6 md:p-12">
-        <div class="self-start glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 5 / 5</div>
-        <div class="mt-auto w-full max-w-4xl mx-auto">
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-6 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 5 / 5</div>
+        <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">“从心里饶恕”是什么意思？</h2>
             <p class="text-sageGreen text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:35</p>
@@ -729,7 +728,6 @@
             </ul>
           </div>
         </div>
-        <div class="flex justify-end mt-4"><button onclick="triggerReveal(this)" class="reveal-btn bg-sageGreen text-white font-bold px-6 py-3 rounded-xl text-xs">显示答案</button></div>
       </div>
       <div class="notes">从心里饶恕＝把审判权交给神，释放对方也释放自己。</div>
     </section>
@@ -897,6 +895,7 @@
         try { ScrollTrigger.getAll().forEach(st => st.kill()); } catch (e) {}
         window.scrollTo(0, 0);
         activeCarouselIndex = 1;
+        pendingCarouselTarget = 0;   // auto-slide and settle on 第一部分 after entering
         // ensure we land on the carousel slide, never mid-deck
         if (location.hash !== '#/1') location.hash = '#/1';
         const active = document.querySelector('.slide.is-active') || slides[0];
@@ -937,12 +936,13 @@
     let activeCarouselIndex = 1;
     const carouselCards = document.querySelectorAll('.carousel-card');
     const carouselDots = document.querySelectorAll('#carousel-dots span');
-    function updateCarousel() {
+    function updateCarousel(dur) {
+      const d = (dur != null) ? dur : 0.5;
       carouselCards.forEach((card, i) => {
         let diff = i - activeCarouselIndex;
         if (diff < -1) diff += 3;
         if (diff > 1) diff -= 3;
-        const base = { duration: 0.5, ease: 'power2.out' };
+        const base = { duration: d, ease: 'power2.out' };
         if (diff === 0) gsap.to(card, { ...base, xPercent: 0, scale: 1.08, opacity: 1, rotateY: 0, zIndex: 10, pointerEvents: 'auto' });
         else if (diff === -1) gsap.to(card, { ...base, xPercent: -108, scale: 0.84, opacity: 0.5, rotateY: 28, zIndex: 5, pointerEvents: 'none' });
         else gsap.to(card, { ...base, xPercent: 108, scale: 0.84, opacity: 0.5, rotateY: -28, zIndex: 5, pointerEvents: 'none' });
@@ -953,9 +953,35 @@
         else { dot.style.width = '10px'; dot.style.height = '10px'; dot.style.borderRadius = '999px'; dot.style.background = 'rgba(255,255,255,0.45)'; }
       });
     }
-    function selectCarouselCard(i) { activeCarouselIndex = i; updateCarousel(); }
-    function prevCarousel() { activeCarouselIndex = (activeCarouselIndex - 1 + 3) % 3; updateCarousel(); }
-    function nextCarousel() { activeCarouselIndex = (activeCarouselIndex + 1) % 3; updateCarousel(); }
+    function selectCarouselCard(i) { if (autoSliding) return; activeCarouselIndex = i; updateCarousel(); }
+    function prevCarousel() { if (autoSliding) return; activeCarouselIndex = (activeCarouselIndex - 1 + 3) % 3; updateCarousel(); }
+    function nextCarousel() { if (autoSliding) return; activeCarouselIndex = (activeCarouselIndex + 1) % 3; updateCarousel(); }
+
+    /* ---------- Auto-slide carousel (~1s) then settle on a target card ---------- */
+    const PART_SECTIONS = ['第一部分·挽回', '第二部分·权柄', '第三部分·饶恕'];
+    let pendingCarouselTarget = null;   // card index the carousel should auto-slide to on enter
+    let autoSliding = false;
+    function lastSlideOfPart(sec) {
+      const ss = slides.filter(s => s.dataset.section === sec);
+      return ss[ss.length - 1];
+    }
+    function autoSlideCarousel(targetIndex, onDone) {
+      if (reduceMotion) { activeCarouselIndex = targetIndex; updateCarousel(); onDone && onDone(); return; }
+      autoSliding = true;
+      const fwd = (targetIndex - activeCarouselIndex + 3) % 3;
+      const totalSteps = fwd + 3;                 // at least one full loop -> visible horizontal slide
+      const interval = 1000 / totalSteps;         // whole sequence ~1s
+      const stepDur = (interval / 1000) * 1.15;   // tween slightly overlaps for continuous motion
+      let count = 0;
+      const tick = () => {
+        activeCarouselIndex = (activeCarouselIndex + 1) % 3;
+        updateCarousel(stepDur);
+        count++;
+        if (count < totalSteps) setTimeout(tick, interval);
+        else { autoSliding = false; onDone && onDone(); }
+      };
+      setTimeout(tick, 120);
+    }
     Draggable.create(document.createElement('div'), {
       trigger: '.perspective-1000', type: 'x', minimumMovement: 18,
       onDragEnd() { if (this.deltaX < -30) nextCarousel(); else if (this.deltaX > 30) prevCarousel(); }
@@ -979,7 +1005,16 @@
         if (qrows.length) gsap.fromTo(qrows, { opacity: 0, x: 24 },
           { opacity: 1, x: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', delay: 0.35 });
       }
-      if (slide.dataset.section === '序幕') setTimeout(updateCarousel, 60);
+      if (slide.dataset.section === '序幕') {
+        setTimeout(() => {
+          updateCarousel();
+          if (pendingCarouselTarget != null) {
+            const t = pendingCarouselTarget;
+            pendingCarouselTarget = null;
+            autoSlideCarousel(t);
+          }
+        }, 60);
+      }
     }
 
     /* ---------- Answer reveal ---------- */
@@ -1022,6 +1057,7 @@
     /* ---------- Navigation (iPad click + keyboard) ---------- */
     function navByDirection(dir, force) {
       if (!document.body.classList.contains('deck-mode')) return;
+      if (autoSliding) return;
       const active = document.querySelector('.slide.is-active');
       if (dir > 0 && !force) {
         const ac = active && active.querySelector('.answer-container');
@@ -1034,16 +1070,42 @@
       if (e.target.closest('button, a, .carousel-card, #carousel-dots, .seg')) return;
       navByDirection(e.clientX < window.innerWidth * 0.32 ? -1 : 1);
     });
-    // keyboard reveal-first interceptor (capture phase, blocks runtime nav when answer hidden)
+    // keyboard interceptor (capture phase): reveal-first, carousel-enters-selected-card, end-of-part loop
+    const FWD_KEYS = ['ArrowRight', ' ', 'Enter', 'PageDown'];
     document.addEventListener('keydown', function (e) {
       if (!document.body.classList.contains('deck-mode')) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const isForward = FWD_KEYS.includes(e.key);
+      // lock all input while the carousel auto-slides (~1s)
+      if (autoSliding) { e.preventDefault(); e.stopImmediatePropagation(); return; }
       const active = document.querySelector('.slide.is-active');
       if (!active) return;
+
+      // 1) reveal-first: hidden answer must be shown before advancing
       const ac = active.querySelector('.answer-container');
       if (ac && !ac.classList.contains('answer-shown')) {
-        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter' || e.key === 'PageDown') {
-          revealAnswer(active); e.preventDefault(); e.stopImmediatePropagation();
+        if (isForward) { revealAnswer(active); e.preventDefault(); e.stopImmediatePropagation(); }
+        return;
+      }
+      if (!isForward) return;
+
+      // 2) on the carousel, advancing enters the currently-selected card's section
+      if (active.dataset.section === '序幕') {
+        e.preventDefault(); e.stopImmediatePropagation();
+        enterSection(activeCarouselIndex + 1);
+        return;
+      }
+
+      // 3) finishing the last slide of a part -> back to carousel, auto-slide to the next part
+      const sec = active.dataset.section;
+      const pi = PART_SECTIONS.indexOf(sec);
+      if (pi !== -1 && active === lastSlideOfPart(sec)) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        if (pi < PART_SECTIONS.length - 1) {
+          pendingCarouselTarget = pi + 1;
+          location.hash = '#/1';
+        } else {
+          location.hash = '#/' + slides.length;   // last part -> conclusion
         }
       }
     }, true);
