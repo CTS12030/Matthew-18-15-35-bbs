@@ -45,7 +45,7 @@
 
     /* ===== Glass cards ===== */
     .glass {
-      background: rgba(255, 247, 239, 0.62);
+      background: rgba(255, 247, 239, 0.32);
       backdrop-filter: blur(22px) saturate(1.15);
       -webkit-backdrop-filter: blur(22px) saturate(1.15);
       border: 1px solid rgba(255, 255, 255, 0.4);
@@ -58,7 +58,7 @@
       border: 1px solid rgba(255, 255, 255, 0.16);
     }
     .parchment {
-      background-color: rgba(253, 251, 247, 0.68);
+      background-color: rgba(253, 251, 247, 0.38);
     }
 
     /* ===== Full-bleed slide backgrounds ===== */
@@ -151,6 +151,14 @@
     /* ===== Answer container ===== */
     .answer-container { opacity: 0; }
 
+    /* ===== Overview progressive reveal ===== */
+    .slide.ov [data-ov-step] { opacity: 0; pointer-events: none; transform: translateY(20px); filter: blur(8px);
+      transition: opacity .5s ease, transform .5s ease, filter .5s ease; }
+    .slide.ov [data-ov-step].ov-visible { opacity: 1; pointer-events: auto; transform: translateY(0); filter: blur(0); }
+
+    /* ===== Timer: fixed bottom-left above footer ===== */
+    .ov-timer-anchor { position: absolute; left: 20px; bottom: 56px; z-index: 38; }
+
     /* ===== +30% typography on chapter (.ov) & question (.qa) slides ===== */
     .slide.ov h3 { font-size: 1.46rem !important; }
     .slide.ov .leading-relaxed,
@@ -168,7 +176,7 @@
     .slide.qa .answer-container { max-height: 42vh !important; }
 
     /* ===== Shared timer wrapper ===== */
-    .timer-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; user-select: none; transition: transform .2s; }
+    .timer-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; transition: transform .2s; }
     .timer-wrap:hover { transform: scale(1.04); }
     .timer-wrap .timer-hint { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .7; transition: opacity .4s; }
     .timer-wrap.running .timer-hint { opacity: 0; pointer-events: none; }
@@ -187,24 +195,31 @@
       font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif; color: #fff; }
     .aw-timer__time { font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
     .aw-timer__sub  { font-size: 9px; color: rgba(255,255,255,.6); margin-top: 3px; letter-spacing: .12em; text-transform: uppercase; }
-    .aw-timer-card { background: rgba(20,20,22,.72); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
-      border: 1px solid rgba(255,255,255,.12); border-radius: 28px; padding: 14px 22px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08); }
+    .aw-timer-card { background: rgba(255,255,255,.02); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.08); border-radius: 28px; padding: 14px 22px;
+      box-shadow: none; }
 
     /* ===== Timer 3: Glassmorphism ===== */
     .glass-timer-card { position: relative; overflow: hidden; border-radius: 22px; padding: 16px 28px;
-      background: rgba(255,247,239,.18); backdrop-filter: blur(28px) saturate(1.3); -webkit-backdrop-filter: blur(28px) saturate(1.3);
-      border: 1px solid rgba(255,255,255,.28);
-      box-shadow: 0 16px 48px rgba(60,30,10,.3), inset 0 1px 0 rgba(255,255,255,.22); }
+      background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+      border: none; box-shadow: none; }
     .glass-timer-card .orb { position: absolute; border-radius: 50%; filter: blur(30px); opacity: .55; pointer-events: none; animation: orbFloat 6s ease-in-out infinite alternate; }
     .glass-timer-card .orb-1 { width: 70px; height: 70px; background: rgba(122,138,102,.6); top: -18px; left: -12px; }
     .glass-timer-card .orb-2 { width: 50px; height: 50px; background: rgba(242,163,65,.5); bottom: -14px; right: -6px; animation-delay: -3s; }
     @keyframes orbFloat { 0% { transform: translate(0,0); } 100% { transform: translate(12px, -10px); } }
     .glass-timer__digits { position: relative; z-index: 1; display: flex; align-items: baseline; gap: 4px;
-      font-family: 'Noto Serif SC', Georgia, serif; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.4); }
+      font-family: 'Noto Serif SC', Georgia, serif; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
     .glass-timer__digits .gt-num { font-size: 38px; font-weight: 700; min-width: 1.1ch; text-align: center; }
     .glass-timer__digits .gt-sep { font-size: 28px; font-weight: 300; opacity: .6; animation: sepBlink 1s step-end infinite; }
     @keyframes sepBlink { 50% { opacity: 0; } }
+
+    /* ===== DVD spinning icon ===== */
+    .dvd-icon { position: fixed; bottom: 24px; right: 24px; z-index: 900; width: 52px; height: 52px;
+      opacity: 0; pointer-events: none; transition: opacity .6s ease; }
+    .dvd-icon.visible { opacity: .65; pointer-events: auto; }
+    .dvd-icon img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.35)); }
+    .dvd-icon.spinning img { animation: dvdSpin linear infinite; animation-duration: var(--spin-dur, 4s); }
+    @keyframes dvdSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     @media (prefers-reduced-motion: reduce) {
       .slide-bg { will-change: auto; }
@@ -254,6 +269,10 @@
       /* Timers: scale down on mobile */
       .timer-wrap { transform: scale(0.75); transform-origin: center; }
       .timer-wrap:hover { transform: scale(0.78); }
+      .ov-timer-anchor { left: 12px; bottom: 50px; }
+      .dvd-icon { bottom: 60px; right: 12px; width: 36px; height: 36px; }
+      /* On mobile, show all ov steps by default (no click reveal) */
+      .slide.ov [data-ov-step] { opacity: 1; pointer-events: auto; transform: none; filter: none; }
     }
   </style>
 </head>
@@ -360,7 +379,7 @@
       <img class="slide-bg" src="assets/bg_s1_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
       <div class="slide-content flex flex-col justify-center gap-4 p-4 md:p-8">
-        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="1">
           <div class="flex items-center gap-2 border-b border-terracotta/20 pb-3 mb-4"><span class="text-terracotta text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:15-17</h3></div>
           <div class="pr-1 font-serif text-warmText1 text-sm md:text-base leading-relaxed space-y-3">
             <p><span class="text-terracotta font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
@@ -369,7 +388,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-terracotta/20 flex items-center justify-between text-xs text-warmText3"><span>第一部分：挽回弟兄</span><span>太 18:15-17</span></div>
         </div>
-        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="2">
           <div>
             <div class="flex items-center justify-between border-b border-terracotta/20 pb-3 mb-4"><div class="flex items-center gap-2"><span class="bg-terracotta/15 text-terracotta font-bold text-xs px-2.5 py-1 rounded">讨论环节</span><h3 class="font-serif text-lg font-bold text-warmText1">本段讨论问题 (共 6 题)</h3></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 overflow-y-auto custom-scrollbar pr-2" style="max-height:34vh">
@@ -382,12 +401,11 @@
             </div>
           </div>
         </div>
-        <!-- Timer 1: FlipClock.js -->
-        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
-          <div class="timer-wrap" id="timer-flip" onclick="event.stopPropagation();startTimer1(this)">
-            <div id="timer1-mount"></div>
-            <span class="timer-hint">点击开始讨论计时 (15分钟)</span>
-          </div>
+      </div>
+      <div class="ov-timer-anchor" data-ov-step="3">
+        <div class="timer-wrap" id="timer-flip" onclick="event.stopPropagation();startTimer1(this)">
+          <div id="timer1-mount"></div>
+          <span class="timer-hint">点击开始计时</span>
         </div>
       </div>
       <div class="notes">第一部分经文与全部问题。请先带领大家讨论，再进入逐题解答。</div>
@@ -545,7 +563,7 @@
       <img class="slide-bg" src="assets/bg_s2_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
       <div class="slide-content flex flex-col justify-center gap-4 p-4 md:p-8">
-        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="1">
           <div class="flex items-center gap-2 border-b border-warmAccent/20 pb-3 mb-4"><span class="text-warmAccent text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:18-20</h3></div>
           <div class="pr-1 font-serif text-warmText1 text-sm md:text-base leading-relaxed space-y-3">
             <p><span class="text-warmAccent font-bold mr-1">18</span> “我实在告诉你们，凡你们在地上所捆绑的，在天上也要捆绑；凡你们在地上所释放的，在天上也要释放。</p>
@@ -554,7 +572,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-warmAccent/20 flex items-center justify-between text-xs text-warmText3"><span>第二部分：天国权柄</span><span>太 18:18-20</span></div>
         </div>
-        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="2">
           <div>
             <div class="flex items-center justify-between border-b border-warmAccent/20 pb-3 mb-4"><div class="flex items-center gap-2"><span class="bg-warmAccent/15 text-warmAccent font-bold text-xs px-2.5 py-1 rounded">讨论环节</span><h3 class="font-serif text-lg font-bold text-warmText1">本段讨论问题 (共 4 题)</h3></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 overflow-y-auto custom-scrollbar pr-2" style="max-height:34vh">
@@ -565,24 +583,22 @@
             </div>
           </div>
         </div>
-        <!-- Timer 2: Apple Watch ring -->
-        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
-          <div class="timer-wrap" id="timer-aw-wrap" onclick="event.stopPropagation();startTimer2(this)">
-            <div class="aw-timer-card">
-              <div class="aw-timer" id="timer-aw">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <defs><linearGradient id="aw-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fc9f5b"/><stop offset="100%" stop-color="#e36a2d"/></linearGradient></defs>
-                  <circle class="aw-timer__track" cx="50" cy="50" r="45"/>
-                  <path class="aw-timer__ring" id="aw-ring" stroke-dasharray="283 283" d="M 50,50 m -45,0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"/>
-                </svg>
-                <div class="aw-timer__label">
-                  <span class="aw-timer__time" id="aw-time">15:00</span>
-                  <span class="aw-timer__sub">讨论</span>
-                </div>
+      </div>
+      <div class="ov-timer-anchor" data-ov-step="3">
+        <div class="timer-wrap" id="timer-aw-wrap" onclick="event.stopPropagation();startTimer2(this)">
+          <div class="aw-timer-card">
+            <div class="aw-timer" id="timer-aw">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="aw-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fc9f5b"/><stop offset="100%" stop-color="#e36a2d"/></linearGradient></defs>
+                <circle class="aw-timer__track" cx="50" cy="50" r="45"/>
+                <path class="aw-timer__ring" id="aw-ring" stroke-dasharray="283 283" d="M 50,50 m -45,0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"/>
+              </svg>
+              <div class="aw-timer__label">
+                <span class="aw-timer__time" id="aw-time">15:00</span>
               </div>
             </div>
-            <span class="timer-hint">点击开始讨论计时</span>
           </div>
+          <span class="timer-hint">点击开始计时</span>
         </div>
       </div>
       <div class="notes">第二部分经文与问题，重点理解与前文处理罪的上下文联系。</div>
@@ -691,7 +707,7 @@
       <img class="slide-bg" src="assets/bg_s3_overview.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to right, rgba(42,22,10,0.82), rgba(42,22,10,0.45) 60%, rgba(42,22,10,0.25))"></div>
       <div class="slide-content flex flex-col justify-center gap-4 p-4 md:p-8">
-        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass parchment rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="1">
           <div class="flex items-center gap-2 border-b border-sageGreen/25 pb-3 mb-3"><span class="text-sageGreen text-lg">📖</span><h3 class="font-serif text-lg font-bold text-warmText1">马太福音 18:21-35</h3></div>
           <div class="pr-1 font-serif text-warmText1 text-[12px] md:text-sm leading-relaxed space-y-2">
             <p><span class="text-sageGreen font-bold mr-1">21</span> 彼得进前来，对耶稣说：“主啊，我弟兄得罪我，我当饶恕他几次呢？到七次可以吗？”<span class="text-sageGreen font-bold mr-1">22</span> 耶稣说：“不是到七次，乃是到七十个七次。</p>
@@ -704,7 +720,7 @@
           </div>
           <div class="mt-2 pt-2 border-t border-sageGreen/25 flex items-center justify-between text-[10px] text-warmText3"><span>第三部分：终极饶恕</span><span>太 18:21-35</span></div>
         </div>
-        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-in>
+        <div class="w-full max-w-5xl mx-auto glass rounded-2xl px-7 py-4 flex flex-col overflow-hidden" data-ov-step="2">
           <div>
             <div class="flex items-center justify-between border-b border-sageGreen/25 pb-3 mb-4"><div class="flex items-center gap-2"><span class="bg-sageGreen/15 text-sageGreen font-bold text-xs px-2.5 py-1 rounded">讨论环节</span><h3 class="font-serif text-lg font-bold text-warmText1">本段讨论问题 (共 5 题)</h3></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 overflow-y-auto custom-scrollbar pr-2" style="max-height:34vh">
@@ -716,20 +732,19 @@
             </div>
           </div>
         </div>
-        <!-- Timer 3: Glassmorphism -->
-        <div class="w-full max-w-5xl mx-auto flex justify-center mt-1" data-in>
-          <div class="timer-wrap" id="timer-glass-wrap" onclick="event.stopPropagation();startTimer3(this)">
-            <div class="glass-timer-card">
-              <div class="orb orb-1"></div>
-              <div class="orb orb-2"></div>
-              <div class="glass-timer__digits" id="glass-digits">
-                <span class="gt-num" id="gt-m1">1</span><span class="gt-num" id="gt-m2">5</span>
-                <span class="gt-sep">:</span>
-                <span class="gt-num" id="gt-s1">0</span><span class="gt-num" id="gt-s2">0</span>
-              </div>
+      </div>
+      <div class="ov-timer-anchor" data-ov-step="3">
+        <div class="timer-wrap" id="timer-glass-wrap" onclick="event.stopPropagation();startTimer3(this)">
+          <div class="glass-timer-card">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="glass-timer__digits" id="glass-digits">
+              <span class="gt-num" id="gt-m1">1</span><span class="gt-num" id="gt-m2">5</span>
+              <span class="gt-sep">:</span>
+              <span class="gt-num" id="gt-s1">0</span><span class="gt-num" id="gt-s2">0</span>
             </div>
-            <span class="timer-hint">点击开始讨论计时</span>
           </div>
+          <span class="timer-hint">点击开始计时</span>
         </div>
       </div>
       <div class="notes">第三部分经文与问题，讨论彼得的提问与恶仆的比喻。</div>
@@ -1115,6 +1130,11 @@
     function onSlideEnter(slide) {
       updateProgress();
       resetAnswers(slide);
+      // Reset overview progressive reveal on all other ov slides
+      slides.forEach(function(s) {
+        if (s === slide) return;
+        s.querySelectorAll('[data-ov-step].ov-visible').forEach(function(el) { el.classList.remove('ov-visible'); });
+      });
       const bg = slide.querySelector('.slide-bg');
       const ins = slide.querySelectorAll('[data-in]');
       const qrows = slide.querySelectorAll('.qrow');
@@ -1205,6 +1225,20 @@
       const active = document.querySelector('.slide.is-active');
       if (!active) return;
 
+      // 0) Overview progressive reveal: bg → scripture → questions → timer
+      if (active.classList.contains('ov') && isForward) {
+        var steps = active.querySelectorAll('[data-ov-step]');
+        var nextStep = null;
+        for (var si = 0; si < steps.length; si++) {
+          if (!steps[si].classList.contains('ov-visible')) { nextStep = steps[si]; break; }
+        }
+        if (nextStep) {
+          e.preventDefault(); e.stopImmediatePropagation();
+          nextStep.classList.add('ov-visible');
+          return;
+        }
+      }
+
       // 1) reveal-first: hidden answer must be shown before advancing
       const ac = active.querySelector('.answer-container');
       if (ac && !ac.classList.contains('answer-shown')) {
@@ -1266,6 +1300,50 @@
 
     /* ========== Discussion Timers (click-to-start, 15 min each) ========== */
     const TIMER_SECS = 15 * 60;
+    var activeBgm = null;
+    var activeTimerIdx = -1;
+
+    function stopAllTimers() {
+      if (activeBgm) { activeBgm.pause(); activeBgm.currentTime = 0; activeBgm = null; }
+      var dvd = document.getElementById('dvd-icon');
+      dvd.classList.remove('spinning');
+      dvd.classList.remove('visible');
+      // Timer 1
+      if (fc1 && fc1.timer) { try { fc1.stop(); } catch(e){} }
+      document.getElementById('timer-flip').classList.remove('running');
+      // Timer 2
+      if (aw2.iv) { clearInterval(aw2.iv); aw2.iv = null; }
+      document.getElementById('timer-aw-wrap').classList.remove('running');
+      // Timer 3
+      if (gt3.iv) { clearInterval(gt3.iv); gt3.iv = null; }
+      document.getElementById('timer-glass-wrap').classList.remove('running');
+      activeTimerIdx = -1;
+    }
+
+    function playBgm(id) {
+      if (activeBgm) { activeBgm.pause(); activeBgm.currentTime = 0; }
+      var audio = document.getElementById(id);
+      activeBgm = audio;
+      audio.volume = 0.35;
+      audio.play().catch(function(){});
+      var dvd = document.getElementById('dvd-icon');
+      dvd.classList.add('visible');
+      dvd.classList.remove('spinning');
+      setTimeout(function() { dvd.classList.add('spinning'); }, 1000);
+      audio.onended = function() {
+        dvd.classList.remove('spinning');
+        setTimeout(function() { dvd.classList.remove('visible'); }, 2000);
+      };
+    }
+
+    // Slide-leave detection: stop timers when navigating away from the overview slide
+    var timerSlideHashes = { 1: '#/2', 2: '#/9', 3: '#/14' };
+    window.addEventListener('hashchange', function() {
+      if (activeTimerIdx > 0) {
+        var expected = timerSlideHashes[activeTimerIdx];
+        if (location.hash !== expected) stopAllTimers();
+      }
+    });
 
     // --- Timer 1: FlipClock.js (terracotta flip counter) ---
     let fc1;
@@ -1291,16 +1369,22 @@
       });
     })();
     function startTimer1(el) {
-      if (el.classList.contains('running')) return;
+      if (el.classList.contains('running')) { stopAllTimers(); return; }
+      stopAllTimers();
       el.classList.add('running');
       fc1.start();
+      playBgm('bgm1');
+      activeTimerIdx = 1;
     }
 
     // --- Timer 2: Apple Watch SVG ring ---
     let aw2 = { left: TIMER_SECS, iv: null };
     function startTimer2(el) {
-      if (el.classList.contains('running')) return;
+      if (el.classList.contains('running')) { stopAllTimers(); return; }
+      stopAllTimers();
       el.classList.add('running');
+      playBgm('bgm2');
+      activeTimerIdx = 2;
       const ring = document.getElementById('aw-ring');
       const label = document.getElementById('aw-time');
       const FULL = 283;
@@ -1328,8 +1412,11 @@
       document.getElementById('gt-s2').textContent = ss[1];
     }
     function startTimer3(el) {
-      if (el.classList.contains('running')) return;
+      if (el.classList.contains('running')) { stopAllTimers(); return; }
+      stopAllTimers();
       el.classList.add('running');
+      playBgm('bgm3');
+      activeTimerIdx = 3;
       gt3.iv = setInterval(function() {
         gt3.left--;
         if (gt3.left < 0) { gt3.left = 0; clearInterval(gt3.iv); }
@@ -1375,5 +1462,10 @@
     })();
   }
   </script>
+  <!-- DVD icon + audio elements -->
+  <div class="dvd-icon" id="dvd-icon"><img src="assets/dvd_icon.png" alt="DVD"></div>
+  <audio id="bgm1" preload="none" src="assets/bgm_part1.mp3"></audio>
+  <audio id="bgm2" preload="none" src="assets/bgm_part2.mp3"></audio>
+  <audio id="bgm3" preload="none" src="assets/bgm_part3.mp3"></audio>
 </body>
 </html>
