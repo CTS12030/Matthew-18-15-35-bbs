@@ -150,6 +150,10 @@
 
     /* ===== Answer container ===== */
     .answer-container { opacity: 0; }
+    .qa-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem); gap: 1rem; align-items: start; }
+    .qa-main { min-width: 0; grid-column: 1; grid-row: 1; }
+    .qa-scripture { max-height: 58vh; grid-column: 2; grid-row: 1; }
+    .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
 
     /* ===== Overview progressive reveal ===== */
     .slide.ov [data-ov-step] { opacity: 0; pointer-events: none; transform: translateY(20px); filter: blur(8px);
@@ -413,6 +417,24 @@
         max-width: 820px !important;
         margin-top: 8px !important;
       }
+      .slide.qa .qa-layout {
+        grid-template-columns: minmax(0, 1fr) 18rem !important;
+        gap: 0.9rem !important;
+        max-width: 1060px !important;
+        margin-top: 0 !important;
+      }
+      .slide.qa .qa-scripture {
+        max-height: calc(100vh - 168px) !important;
+        padding: 1rem 1.1rem !important;
+      }
+      .slide.qa .qa-scripture h4 {
+        font-size: 0.92rem !important;
+        margin-bottom: 0.65rem !important;
+      }
+      .slide.qa .qa-scripture-text {
+        font-size: 0.84rem !important;
+        line-height: 1.48 !important;
+      }
       .slide.qa .glass.rounded-2xl.p-6,
       .slide.qa .glass.rounded-2xl.p-5 {
         padding: 1rem 1.15rem !important;
@@ -491,6 +513,8 @@
       .dvd-icon { bottom: 60px; right: 12px; width: 36px; height: 36px; }
       /* On mobile, show all ov steps by default (no click reveal) */
       .slide.ov [data-ov-step] { opacity: 1; pointer-events: auto; transform: none; filter: none; }
+      .qa-layout { display: block; }
+      .qa-scripture { margin-bottom: 0.75rem; max-height: none; }
     }
   </style>
 </head>
@@ -635,7 +659,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 1 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">马太 18:15–17 里，耶稣给了哪几个处理弟兄犯罪的步骤？你觉得这几个步骤的目的是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15-17</p>
@@ -650,6 +683,7 @@
               <li class="answer-point flex gap-2 pt-2 border-t border-terracotta/15 text-terracotta font-semibold"><span>★</span><span>重点不是一步步升级惩罚，而是一步步扩大挽回的努力。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">引导大家先复述步骤，强调目的是挽回而非惩罚。</div>
@@ -661,7 +695,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 2 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">“他若听你，你便得了你的弟兄”，这句话说明处理罪的目标是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15</p>
@@ -674,6 +717,7 @@
               <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span>正如 99 只羊的比喻，丢失的那一只，也是神最宝贵、最渴望寻回的那一只。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">强调福音的核心是挽回，不是定罪。</div>
@@ -685,7 +729,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 3 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第一步是“只有他和你在一处”的目的是什么？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:15</p>
@@ -698,6 +751,7 @@
               <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>显明动机：</strong>显明目标是挽回他，而不是曝光、定罪或报复。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">私下、温柔、保护，是挽回的第一原则。</div>
@@ -709,7 +763,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 4 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第二步为什么要带一两个人同去？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:16</p>
@@ -722,6 +785,7 @@
               <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>更多机会：</strong>多一两个属灵同伴的劝勉，给对方更多悔改的机会。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">见证人是为了公正与挽回，不是为了施压。</div>
@@ -733,7 +797,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 5 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">第三步“告诉教会”是什么意思？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
@@ -746,6 +819,7 @@
               <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>爱的追寻：</strong>整个教会要知道这人需要被追寻、劝勉、挽回。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">教会的参与是为了挽回，不是审判秀。</div>
@@ -757,7 +831,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 6 / 6</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">15</span> “倘若你的弟兄得罪你，你就去，趁着只有他和你在一处的时候，指出他的错来。他若听你，你便得了你的弟兄；</p>
+              <p><span class="font-bold mr-1">16</span> 他若不听，你就另外带一两个人同去，要凭两三个人的口作见证，句句都可定准。</p>
+              <p><span class="font-bold mr-1">17</span> 若是不听他们，就告诉教会；若是不听教会，就看他像外邦人和税吏一样。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">最后“看他像外邦人和税吏”是什么意思？为什么这么强调教会必须处理罪？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
@@ -770,6 +853,7 @@
               <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>保护圣洁：</strong>罪像面酵，会影响全团。</span></li>
               <li class="answer-point flex gap-2 pt-2 border-t border-terracotta/15 text-terracotta font-semibold"><span>★</span><span>教会是基督的教会。只讲道反对罪却不按圣经处理罪，就是选择性顺服，让人觉得教会并不认真看待圣洁。</span></li>
             </ul>
+          </div>
           </div>
         </div>
       </div>
@@ -828,7 +912,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 1 / 4</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">18</span> “我实在告诉你们，凡你们在地上所捆绑的，在天上也要捆绑；凡你们在地上所释放的，在天上也要释放。</p>
+              <p><span class="font-bold mr-1">19</span> 我又告诉你们，若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。</p>
+              <p><span class="font-bold mr-1">20</span> 因为无论在哪里，有两三个人奉我的名聚会，那里就有我在他们中间。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">这段为什么会突然出现在这里？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:18-20</p>
@@ -841,6 +934,7 @@
               <li class="answer-point flex gap-2"><span class="text-warmAccent font-bold">•</span><span><strong>非个人情绪：</strong>不是凭个人恩怨或血气，而是顺服在基督的话语之下。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">这段是在回答教会处理罪的权柄从何而来。</div>
@@ -852,7 +946,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 2 / 4</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">18</span> “我实在告诉你们，凡你们在地上所捆绑的，在天上也要捆绑；凡你们在地上所释放的，在天上也要释放。</p>
+              <p><span class="font-bold mr-1">19</span> 我又告诉你们，若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。</p>
+              <p><span class="font-bold mr-1">20</span> 因为无论在哪里，有两三个人奉我的名聚会，那里就有我在他们中间。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">18 节：“凡你们在地上所捆绑的，在天上也要捆绑；所释放的，在天上也要释放。”这里的“捆绑”和“释放”是什么意思？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:18</p>
@@ -866,6 +969,7 @@
               <li class="answer-point flex gap-2 pt-2 border-t border-warmAccent/15 text-warmAccent font-semibold"><span>★</span><span>权柄不在人的情绪、长老个人意见或多数投票里，而在<strong>基督的话语</strong>里。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">务必纠正“捆绑释放”的流行误用，回到上下文。</div>
@@ -877,7 +981,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 3 / 4</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">18</span> “我实在告诉你们，凡你们在地上所捆绑的，在天上也要捆绑；凡你们在地上所释放的，在天上也要释放。</p>
+              <p><span class="font-bold mr-1">19</span> 我又告诉你们，若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。</p>
+              <p><span class="font-bold mr-1">20</span> 因为无论在哪里，有两三个人奉我的名聚会，那里就有我在他们中间。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">19 节：“若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。”这里是指任何愿望吗？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:19</p>
@@ -890,6 +1003,7 @@
               <li class="answer-point flex gap-2"><span class="text-warmAccent font-bold">•</span><span><strong>求神的工作：</strong>求神洁净、恢复或管教，是在做天父的工作，父必成全祂的旨意。</span></li>
             </ul>
           </div>
+          </div>
         </div>
       </div>
       <div class="notes">同心合意是在教会纪律与恢复的语境里。</div>
@@ -901,7 +1015,16 @@
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
         <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 4 / 4</div>
-        <div class="w-full max-w-4xl mx-auto">
+        <div class="qa-layout w-full max-w-6xl mx-auto">
+          <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
+            <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
+            <div class="qa-scripture-text font-serif text-warmText1 space-y-3">
+              <p><span class="font-bold mr-1">18</span> “我实在告诉你们，凡你们在地上所捆绑的，在天上也要捆绑；凡你们在地上所释放的，在天上也要释放。</p>
+              <p><span class="font-bold mr-1">19</span> 我又告诉你们，若是你们中间有两个人在地上同心合意地求什么事，我在天上的父必为他们成全。</p>
+              <p><span class="font-bold mr-1">20</span> 因为无论在哪里，有两三个人奉我的名聚会，那里就有我在他们中间。”</p>
+            </div>
+          </aside>
+          <div class="qa-main">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">20 节：“有两三个人奉我的名聚会，那里就有我在他们中间。”这里的原意和重点是什么？</h2>
             <p class="text-warmAccent text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:20</p>
@@ -914,6 +1037,7 @@
               <li class="answer-point flex gap-2"><span class="text-warmAccent font-bold">•</span><span><strong>基督在场：</strong>当人不凭血气、奉主名温柔公正地挽回弟兄时，基督亲自在他们中间。</span></li>
               <li class="answer-point flex gap-2 pt-2 border-t border-warmAccent/15 text-warmAccent font-semibold"><span>★</span><span>双重提醒：面对罪<strong>不能随便</strong>，因为基督在场；面对罪<strong>不用惧怕</strong>，因为基督也在场。</span></li>
             </ul>
+          </div>
           </div>
         </div>
       </div>
@@ -946,7 +1070,7 @@
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">2</span><p class="text-warmText1 text-xs md:text-sm font-medium">“一千万银子”和“十两银子”分别代表什么？对比强烈吗？</p></div>
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">3</span><p class="text-warmText1 text-xs md:text-sm font-medium">为什么主人称那个不饶恕人的仆人为“恶仆”？根本问题在哪里？</p></div>
               <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">4</span><p class="text-warmText1 text-xs md:text-sm font-medium">为什么不饶恕是如此严重的罪？圣经其他地方怎么说？</p></div>
-              <div class="qrow flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">5</span><p class="text-warmText1 text-xs md:text-sm font-medium">“从心里饶恕”是什么意思？我们该如何行？</p></div>
+              <div class="qrow md:col-start-2 flex gap-3 items-start p-2 rounded-xl"><span class="bg-sageGreen text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">5</span><p class="text-warmText1 text-xs md:text-sm font-medium">“从心里饶恕”是什么意思？我们该如何行？</p></div>
             </div>
           </div>
         </div>
