@@ -184,6 +184,7 @@
     .timer-wrap:hover { transform: scale(1.04); }
     .timer-wrap .timer-hint { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .7; transition: opacity .4s; }
     .timer-wrap.running .timer-hint { opacity: 0; pointer-events: none; }
+    #timer-glass-wrap .timer-hint { display: none !important; }
 
     /* ===== Timer 1: FlipClock.js warm terracotta ===== */
     #timer-flip .flip-clock { --fc-digit-color: #fff; --fc-digit-bg: linear-gradient(180deg, #c85a49 0%, #a34538 100%);
@@ -463,6 +464,41 @@
       }
       .slide.qa .answer-point {
         gap: 0.42rem !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-layout,
+      .slide.qa[data-section="第二部分·权柄"] .qa-layout {
+        align-items: stretch !important;
+        margin-top: 50px !important;
+      }
+      .slide.qa[data-title="第一部分：问题 6"] .qa-layout {
+        margin-top: 26px !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-main,
+      .slide.qa[data-section="第二部分·权柄"] .qa-main {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-scripture,
+      .slide.qa[data-section="第二部分·权柄"] .qa-scripture {
+        align-self: stretch !important;
+        height: 100% !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-scripture h4,
+      .slide.qa[data-section="第二部分·权柄"] .qa-scripture h4 {
+        font-size: 1.02rem !important;
+        margin-bottom: 0.78rem !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-scripture-text,
+      .slide.qa[data-section="第二部分·权柄"] .qa-scripture-text {
+        font-size: 1.02rem !important;
+        line-height: 1.58 !important;
+        font-weight: 400 !important;
+      }
+      .slide.qa[data-section="第一部分·挽回"] .qa-scripture-text span,
+      .slide.qa[data-section="第二部分·权柄"] .qa-scripture-text span {
+        font-weight: 400 !important;
       }
     }
 
