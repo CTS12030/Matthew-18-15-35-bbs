@@ -156,11 +156,24 @@
     .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
     .discipline-sections { display: grid; gap: 0.72rem; color: var(--text-1); }
     .discipline-section { display: block; padding: 0.72rem 0.85rem; border-radius: 14px; border: 1px solid rgba(168, 96, 50, 0.16); background: rgba(255, 247, 239, 0.34); }
-    .discipline-section h5 { font-size: 0.98rem; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
+    .discipline-section h5 { font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.35; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
     .discipline-section p { margin-top: 0.28rem; }
-    .scripture-ref { display: inline-block; margin-top: 0.38rem; font-size: 0.8rem; font-weight: 800; color: var(--text-2); }
-    .scripture-text { font-family: "Noto Serif SC", serif; font-size: 0.9rem; line-height: 1.48; color: var(--text-1); }
-    .discipline-note { font-size: 0.88rem; line-height: 1.45; font-weight: 600; color: var(--text-1); }
+    .scripture-ref { display: inline-block; margin-top: 0.38rem; font-size: 0.92rem; font-weight: 800; color: var(--text-2); }
+    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.46; color: var(--text-1); }
+    .discipline-note { font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.44; font-weight: 600; color: var(--text-1); }
+
+    /* ===== New Testament practice slide ===== */
+    .practice-grid { width: min(1120px, 100%); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(21rem, 27rem); grid-template-rows: auto auto auto; gap: 1rem; align-items: stretch; }
+    .practice-card { opacity: 0; pointer-events: none; transform: translateY(24px) scale(0.98); filter: blur(8px); border-radius: 20px; }
+    .practice-card.is-visible { opacity: 1; pointer-events: auto; transform: none; filter: none; }
+    .practice-card-main { grid-column: 1; grid-row: 1; }
+    .practice-example { grid-column: 1; grid-row: 2; }
+    .practice-summary { grid-column: 1; grid-row: 3; }
+    .practice-right { grid-column: 2; grid-row: 1 / 4; min-height: 0; max-height: calc(100vh - 190px); }
+    .practice-card h3 { font-family: "Noto Serif SC", serif; font-weight: 800; color: var(--text-1); line-height: 1.35; }
+    .practice-card p { color: var(--text-1); line-height: 1.55; }
+    .practice-ref { display: inline-block; font-weight: 800; color: var(--text-2); margin-bottom: 0.55rem; }
+    .practice-scripture-text { font-family: "Noto Serif SC", serif; color: var(--text-1); line-height: 1.55; }
 
     /* ===== Overview progressive reveal ===== */
     .slide.ov [data-ov-step] { opacity: 0; pointer-events: none; transform: translateY(20px); filter: blur(8px);
@@ -501,17 +514,42 @@
         border-radius: 12px !important;
       }
       .slide.qa-discipline .discipline-section h5 {
-        font-size: 0.88rem !important;
+        font-size: clamp(1.08rem, 2.05vw, 1.48rem) !important;
+        line-height: 1.34 !important;
         margin-bottom: 0.24rem !important;
       }
       .slide.qa-discipline .scripture-ref {
-        font-size: 0.74rem !important;
+        font-size: 0.9rem !important;
         margin-top: 0.24rem !important;
       }
       .slide.qa-discipline .scripture-text,
       .slide.qa-discipline .discipline-note {
-        font-size: 0.82rem !important;
+        font-size: clamp(1.08rem, 2.05vw, 1.48rem) !important;
         line-height: 1.36 !important;
+      }
+      .practice-slide .slide-content {
+        padding: 72px 58px 82px !important;
+      }
+      .practice-grid {
+        grid-template-columns: minmax(0, 1fr) 23rem !important;
+        gap: 0.8rem !important;
+        max-width: 1060px !important;
+      }
+      .practice-card {
+        border-radius: 18px !important;
+        padding: 1rem 1.1rem !important;
+      }
+      .practice-card h3 {
+        font-size: 1.18rem !important;
+      }
+      .practice-card p,
+      .practice-scripture-text {
+        font-size: 0.98rem !important;
+        line-height: 1.42 !important;
+      }
+      .practice-ref {
+        font-size: 0.82rem !important;
+        margin-bottom: 0.35rem !important;
       }
       .slide.qa[data-section="第一部分·挽回"] .qa-main,
       .slide.qa[data-section="第二部分·权柄"] .qa-main {
@@ -591,6 +629,9 @@
       .slide.ov [data-ov-step] { opacity: 1; pointer-events: auto; transform: none; filter: none; }
       .qa-layout { display: block; }
       .qa-scripture { margin-bottom: 0.75rem; max-height: none; }
+      .practice-grid { display: block; }
+      .practice-card { margin-bottom: 0.75rem; }
+      .practice-right { max-height: none; }
     }
   </style>
 </head>
@@ -964,6 +1005,59 @@
         </div>
       </div>
       <div class="notes">本部分收尾，强调处理罪与保护圣洁的关系。</div>
+    </section>
+
+    <!-- S1 Practice: 新约中的实践 -->
+    <section class="slide practice-slide" data-title="第一部分：新约实践" data-section="第一部分·挽回" data-accent="terracotta" data-practice-stage="1">
+      <img class="slide-bg" src="assets/bg_s1_q6.jpg" alt="">
+      <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.42) 56%, rgba(42,22,10,0.18))"></div>
+      <div class="slide-content flex flex-col justify-center p-6 md:p-12">
+        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 新约实践</div>
+        <div class="practice-grid">
+          <article class="practice-card practice-card-main is-visible glass parchment p-6 md:p-7" data-practice-step="1" data-in>
+            <h3 class="text-xl md:text-3xl mb-4">新约教会怎样实践这件事？</h3>
+            <p class="text-base md:text-xl font-semibold">但这是新约里，耶稣在讲完祂要把教会建立在基督这个磐石上之后，给教会的第一个指导。我们可以看一下新约里面类似实践的结果。</p>
+          </article>
+
+          <article class="practice-card practice-right glass parchment p-5 md:p-6 overflow-y-auto custom-scrollbar" data-practice-step="2">
+            <span class="practice-ref">使徒行传 5:1–6</span>
+            <div class="practice-scripture-text space-y-3 text-sm md:text-base">
+              <p><strong>1</strong> 有一个人，名叫亚拿尼亚，同他的妻子撒非喇卖了田产，</p>
+              <p><strong>2</strong> 把价银私自留下几分，他的妻子也知道，其余的几分拿来放在使徒脚前。</p>
+              <p><strong>3</strong> 彼得说：“亚拿尼亚！为什么撒但充满了你的心，叫你欺哄圣灵，把田地的价银私自留下几分呢？</p>
+              <p><strong>4</strong> 田地还没有卖，不是你自己的吗？既卖了，价银不是你作主吗？你怎么心里起这意念呢？你不是欺哄人，是欺哄神了。”</p>
+              <p><strong>5</strong> 亚拿尼亚听见这话，就仆倒，断了气；听见的人都甚惧怕。</p>
+              <p><strong>6</strong> 有些少年人起来，把他包裹，抬出去埋葬了。</p>
+            </div>
+          </article>
+
+          <article class="practice-card practice-right glass parchment p-5 md:p-6 overflow-y-auto custom-scrollbar" data-practice-step="3">
+            <span class="practice-ref">使徒行传 5:7–11，14</span>
+            <div class="practice-scripture-text space-y-3 text-sm md:text-base">
+              <p><strong>7</strong> 约过了三小时，他的妻子进来，还不知道这事。</p>
+              <p><strong>8</strong> 彼得对她说：“你告诉我，你们卖田地的价银就是这些吗？”她说：“就是这些。”</p>
+              <p><strong>9</strong> 彼得说：“你们为什么同心试探主的灵呢？埋葬你丈夫之人的脚已到门口，他们也要把你抬出去。”</p>
+              <p><strong>10</strong> 妇人立刻仆倒在彼得脚前，断了气。那些少年人进来，见她已经死了，就抬出去，埋在她丈夫旁边。</p>
+              <p><strong>11</strong> 全教会和听见这事的人都甚惧怕。</p>
+              <p>……</p>
+              <p><strong>14 信而归主的人越发增添，连男带女很多。</strong></p>
+            </div>
+          </article>
+
+          <article class="practice-card practice-example glass p-5 md:p-6" data-practice-step="4">
+            <h3 class="text-lg md:text-2xl mb-3">第二个例子：保罗当面责备彼得</h3>
+            <p class="text-sm md:text-lg">加拉太书 2:11 说，后来矶法到了安提阿，“因他有可责之处，我就当面抵挡他。”</p>
+            <p class="text-sm md:text-lg mt-3">后来怎么样了？那结束了他们的关系吗？彼得后书 3:15，看彼得的文字：“就如我们所亲爱的兄弟保罗，照着所赐给他的智慧写了信给你们。”</p>
+            <p class="text-sm md:text-lg mt-3 font-semibold">保罗是彼得所亲爱的兄弟，因为保罗在面对彼得时，心里所想的只有恢复。</p>
+          </article>
+
+          <article class="practice-card practice-summary glass p-5 md:p-6" data-practice-step="5">
+            <h3 class="text-lg md:text-2xl mb-3">以圣洁的方式增长</h3>
+            <p class="text-sm md:text-lg font-semibold">不是我们要建造教会，是主要建造教会；但我们需要知道怎么建造，然后去实行祂。很多时候我们这么做可能会担忧人数的流失，担心得罪人，但今天的经文白纸黑字地告诉我们：教会要以荣耀神的方式增长，以圣洁的方式增长。</p>
+          </article>
+        </div>
+      </div>
+      <div class="notes">新约实践案例页。先让第一张卡片建立问题意识，再依次展示亚拿尼亚和撒非喇、保罗责备彼得，以及最后应用。</div>
     </section>
 
     <!-- ============ S2 OVERVIEW ============ -->
@@ -1593,6 +1687,7 @@
     function onSlideEnter(slide) {
       updateProgress();
       resetAnswers(slide);
+      resetPracticeSlides(slide);
       // Reset overview progressive reveal on all other ov slides
       slides.forEach(function(s) {
         if (s === slide) return;
@@ -1624,6 +1719,76 @@
           }
         }, 60);
       }
+    }
+
+    /* ---------- New Testament practice reveal ---------- */
+    function resetPracticeSlides(activeSlide) {
+      slides.forEach(function(s) {
+        if (!s.classList.contains('practice-slide')) return;
+        resetPracticeSlide(s);
+      });
+    }
+    function resetPracticeSlide(slide) {
+      if (!slide || !slide.classList.contains('practice-slide')) return;
+      slide.dataset.practiceStage = '1';
+      slide.querySelectorAll('[data-practice-step]').forEach(function(card) {
+        var isFirst = card.dataset.practiceStep === '1';
+        card.classList.toggle('is-visible', isFirst);
+        gsap.set(card, {
+          opacity: isFirst ? 1 : 0,
+          x: 0,
+          y: isFirst ? 0 : 24,
+          scale: isFirst ? 1 : 0.98,
+          filter: isFirst ? 'blur(0px)' : 'blur(8px)'
+        });
+      });
+    }
+    function showPracticeCard(card, fromRight) {
+      if (!card) return;
+      card.classList.add('is-visible');
+      if (reduceMotion) {
+        gsap.set(card, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' });
+        return;
+      }
+      gsap.fromTo(card,
+        { opacity: 0, x: fromRight ? 32 : 0, y: fromRight ? 0 : 22, scale: 0.98, filter: 'blur(8px)' },
+        { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' });
+    }
+    function hidePracticeCard(card, onDone) {
+      if (!card) { onDone && onDone(); return; }
+      card.classList.remove('is-visible');
+      if (reduceMotion) {
+        gsap.set(card, { opacity: 0, x: 0, y: 24, scale: 0.98, filter: 'blur(8px)' });
+        onDone && onDone();
+        return;
+      }
+      gsap.to(card, {
+        opacity: 0,
+        x: 28,
+        filter: 'blur(8px)',
+        duration: 0.28,
+        ease: 'power2.in',
+        onComplete: function() {
+          gsap.set(card, { x: 0, y: 24, scale: 0.98 });
+          onDone && onDone();
+        }
+      });
+    }
+    function advancePracticeSlide(slide) {
+      if (!slide || !slide.classList.contains('practice-slide')) return false;
+      var stage = Number(slide.dataset.practiceStage || 1);
+      if (stage >= 5) return false;
+      var next = stage + 1;
+      var nextCard = slide.querySelector('[data-practice-step="' + next + '"]');
+      slide.dataset.practiceStage = String(next);
+      if (next === 3) {
+        hidePracticeCard(slide.querySelector('[data-practice-step="2"]'), function() {
+          showPracticeCard(nextCard, true);
+        });
+      } else {
+        showPracticeCard(nextCard, next === 2 || next === 3);
+      }
+      return true;
     }
 
     /* ---------- Answer reveal ---------- */
@@ -1705,6 +1870,14 @@
       }
 
       // 1) reveal-first: hidden answer must be shown before advancing
+      if (active.classList.contains('practice-slide') && isForward) {
+        if (advancePracticeSlide(active)) {
+          e.preventDefault(); e.stopImmediatePropagation();
+          return;
+        }
+      }
+
+      // 2) reveal-first: hidden answer must be shown before advancing
       const ac = active.querySelector('.answer-container');
       if (ac && !ac.classList.contains('answer-shown')) {
         if (isForward) { revealAnswer(active); e.preventDefault(); e.stopImmediatePropagation(); }
@@ -1712,14 +1885,14 @@
       }
       if (!isForward) return;
 
-      // 2) on the carousel, advancing enters the currently-selected card's section
+      // 3) on the carousel, advancing enters the currently-selected card's section
       if (active.dataset.section === '序幕') {
         e.preventDefault(); e.stopImmediatePropagation();
         enterSection(activeCarouselIndex + 1);
         return;
       }
 
-      // 3) finishing the last slide of a part -> back to carousel, auto-slide to the next part
+      // 4) finishing the last slide of a part -> back to carousel, auto-slide to the next part
       const sec = active.dataset.section;
       const pi = PART_SECTIONS.indexOf(sec);
       if (pi !== -1 && active === lastSlideOfPart(sec)) {
