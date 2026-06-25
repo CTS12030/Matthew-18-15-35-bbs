@@ -154,6 +154,13 @@
     .qa-main { min-width: 0; grid-column: 1; grid-row: 1; }
     .qa-scripture { max-height: 58vh; grid-column: 2; grid-row: 1; }
     .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
+    .discipline-sections { display: grid; gap: 0.72rem; color: var(--text-1); }
+    .discipline-section { display: block; padding: 0.72rem 0.85rem; border-radius: 14px; border: 1px solid rgba(168, 96, 50, 0.16); background: rgba(255, 247, 239, 0.34); }
+    .discipline-section h5 { font-size: 0.98rem; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
+    .discipline-section p { margin-top: 0.28rem; }
+    .scripture-ref { display: inline-block; margin-top: 0.38rem; font-size: 0.8rem; font-weight: 800; color: var(--text-2); }
+    .scripture-text { font-family: "Noto Serif SC", serif; font-size: 0.9rem; line-height: 1.48; color: var(--text-1); }
+    .discipline-note { font-size: 0.88rem; line-height: 1.45; font-weight: 600; color: var(--text-1); }
 
     /* ===== Overview progressive reveal ===== */
     .slide.ov [data-ov-step] { opacity: 0; pointer-events: none; transform: translateY(20px); filter: blur(8px);
@@ -477,6 +484,34 @@
       }
       .slide.qa[data-title="第一部分：问题 6"] .qa-layout {
         margin-top: 26px !important;
+      }
+      .slide.qa-discipline .qa-layout {
+        margin-top: 14px !important;
+      }
+      .slide.qa-discipline .answer-container {
+        max-height: 50vh !important;
+      }
+      .slide.qa-discipline .discipline-sections {
+        gap: 0.48rem !important;
+        font-size: 0.86rem !important;
+        line-height: 1.38 !important;
+      }
+      .slide.qa-discipline .discipline-section {
+        padding: 0.52rem 0.66rem !important;
+        border-radius: 12px !important;
+      }
+      .slide.qa-discipline .discipline-section h5 {
+        font-size: 0.88rem !important;
+        margin-bottom: 0.24rem !important;
+      }
+      .slide.qa-discipline .scripture-ref {
+        font-size: 0.74rem !important;
+        margin-top: 0.24rem !important;
+      }
+      .slide.qa-discipline .scripture-text,
+      .slide.qa-discipline .discipline-note {
+        font-size: 0.82rem !important;
+        line-height: 1.36 !important;
       }
       .slide.qa[data-section="第一部分·挽回"] .qa-main,
       .slide.qa[data-section="第二部分·权柄"] .qa-main {
@@ -867,7 +902,7 @@
     </section>
 
     <!-- S1 Q6 -->
-    <section class="slide qa" data-title="第一部分：问题 6" data-section="第一部分·挽回" data-accent="terracotta">
+    <section class="slide qa qa-discipline" data-title="第一部分：问题 6" data-section="第一部分·挽回" data-accent="terracotta">
       <img class="slide-bg" src="assets/bg_s1_q6.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
@@ -886,14 +921,44 @@
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">最后“看他像外邦人和税吏”是什么意思？为什么这么强调教会必须处理罪？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
           </div>
-          <div class="answer-container glass rounded-2xl p-5 md:p-6 mt-4 overflow-y-auto custom-scrollbar" style="max-height:36vh">
+          <div class="answer-container glass rounded-2xl p-5 md:p-6 mt-4 overflow-y-auto custom-scrollbar" style="max-height:50vh">
             <h4 class="text-terracotta font-bold text-sm mb-3">💡 查经要点</h4>
-            <ul class="space-y-2.5 text-warmText1 text-xs md:text-sm">
-              <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>非恨与报复：</strong>不是去恨他、报复他，而是<strong>不再把他当作正常悔改、顺服基督的弟兄</strong>来接纳在团契中。</span></li>
-              <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>重新对待：</strong>他持续拒绝悔改，教会不能假装他与主关系正常；要把他当作<strong>需要悔改、需要重新回应福音的人</strong>来对待。</span></li>
-              <li class="answer-point flex gap-2"><span class="text-terracotta font-bold">•</span><span><strong>保护圣洁：</strong>罪像面酵，会影响全团。</span></li>
-              <li class="answer-point flex gap-2 pt-2 border-t border-terracotta/15 text-terracotta font-semibold"><span>★</span><span>教会是基督的教会。只讲道反对罪却不按圣经处理罪，就是选择性顺服，让人觉得教会并不认真看待圣洁。</span></li>
-            </ul>
+            <div class="discipline-sections">
+              <div class="answer-point discipline-section">
+                <h5>重新对待：不是恨他，而是不假装一切正常</h5>
+                <p class="discipline-note">他持续拒绝悔改，教会不能继续把他当作正常悔改、顺服基督的弟兄来接纳在团契中。</p>
+                <span class="scripture-ref">哥林多前书 5:11</span>
+                <p class="scripture-text">但如今我写信给你们说，若有称为弟兄是行淫乱的，或贪婪的，或拜偶像的，或辱骂的，或醉酒的，或勒索的，这样的人<strong>不可与他相交，就是与他吃饭都不可。</strong></p>
+                <p class="discipline-note">然后保罗继续说：</p>
+                <span class="scripture-ref">哥林多前书 5:13</span>
+                <p class="scripture-text">你们应当把那恶人从你们中间赶出去。</p>
+              </div>
+
+              <div class="answer-point discipline-section">
+                <h5>主餐不是随便领的</h5>
+                <span class="scripture-ref">哥林多前书 11:27–29</span>
+                <p class="scripture-text">所以，无论何人，不按理吃主的饼，喝主的杯，就是干犯主的身、主的血了。人应当自己省察，然后吃这饼、喝这杯。因为人吃喝，若不分辨是主的身体，就是吃喝自己的罪了。</p>
+                <p class="discipline-note">这里主要讲个人要省察自己，但也说明主餐不是随便领的。若一个人明知自己在罪中却拒绝悔改，继续领主餐就是很严重的事。</p>
+              </div>
+
+              <div class="answer-point discipline-section">
+                <h5>劝他如弟兄，不是把他当仇人</h5>
+                <span class="scripture-ref">帖撒罗尼迦后书 3:14–15</span>
+                <p class="scripture-text">若有人不听从我们这信上的话，要记下他，不和他交往，叫他自觉羞愧。但不要以他为仇人，要劝他如弟兄。</p>
+              </div>
+
+              <div class="answer-point discipline-section">
+                <h5>保护圣洁：我们需要保护教会的圣洁</h5>
+                <span class="scripture-ref">加拉太书 5:9</span>
+                <p class="scripture-text">一点面酵能使全团都发起来。</p>
+                <p class="discipline-note">神呼召他的百姓圣洁。</p>
+                <span class="scripture-ref">彼得前书 1:15–16</span>
+                <p class="scripture-text">那召你们的既是圣洁，你们在一切所行的事上也要圣洁。因为经上记着说：“你们要圣洁，因为我是圣洁的。”</p>
+                <p class="discipline-note">基督爱教会，是要使教会圣洁无瑕。</p>
+                <span class="scripture-ref">以弗所书 5:25–27</span>
+                <p class="scripture-text">基督爱教会，为教会舍己。要用水藉着道把教会洗净，成为圣洁，可以献给自己，作个荣耀的教会，毫无玷污、皱纹等类的病，乃是圣洁没有瑕疵的。</p>
+              </div>
+            </div>
           </div>
           </div>
         </div>
