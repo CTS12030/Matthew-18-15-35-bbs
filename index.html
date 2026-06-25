@@ -180,6 +180,8 @@
     .support-verse { border-radius: 14px; border: 1px solid rgba(168, 96, 50, 0.16); background: rgba(255, 247, 239, 0.34); padding: 0.78rem 0.9rem; }
     .support-verse h5 { font-size: 0.9rem; font-weight: 800; color: var(--text-2); margin-bottom: 0.35rem; }
     .support-verse p { font-family: "Noto Serif SC", serif; font-size: 0.92rem; line-height: 1.45; color: var(--text-1); }
+    .slide.qa-no-scroll .answer-container { max-height: calc(42vh + 20px) !important; overflow-y: hidden !important; }
+    .slide.qa-no-scroll .qa-scripture { overflow-y: hidden !important; }
 
     /* ===== Overview progressive reveal ===== */
     .slide.ov [data-ov-step] { opacity: 0; pointer-events: none; transform: translateY(20px); filter: blur(8px);
@@ -204,6 +206,7 @@
     .slide.qa .answer-container h4 { font-size: 1.08rem !important; }
     .slide.qa .answer-container ul { font-size: 1.2rem !important; line-height: 1.6 !important; }
     .slide.qa .answer-container { max-height: 42vh !important; }
+    .slide.qa.qa-no-scroll .answer-container { max-height: calc(42vh + 20px) !important; overflow-y: hidden !important; }
 
     /* ===== Shared timer wrapper ===== */
     .timer-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; transition: transform .2s; }
@@ -485,6 +488,13 @@
         max-height: 38vh !important;
         overflow-y: auto !important;
       }
+      .slide.qa-no-scroll .answer-container {
+        max-height: calc(38vh + 20px) !important;
+        overflow-y: hidden !important;
+      }
+      .slide.qa-no-scroll .qa-scripture {
+        overflow-y: hidden !important;
+      }
       .slide.qa .answer-container h4 {
         font-size: 1.06rem !important;
         margin-bottom: 0.55rem !important;
@@ -603,6 +613,9 @@
       .slide.qa[data-section="第一部分·挽回"] .qa-scripture-text span,
       .slide.qa[data-section="第二部分·权柄"] .qa-scripture-text span {
         font-weight: 400 !important;
+      }
+      .slide.qa.qa-no-scroll .qa-scripture {
+        overflow-y: hidden !important;
       }
     }
 
@@ -1254,7 +1267,7 @@
     </section>
 
     <!-- S2 Q4 -->
-    <section class="slide qa" data-title="第二部分：问题 4" data-section="第二部分·权柄" data-accent="warmAccent">
+    <section class="slide qa qa-no-scroll" data-title="第二部分：问题 4" data-section="第二部分·权柄" data-accent="warmAccent">
       <img class="slide-bg" src="assets/bg_s2_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
