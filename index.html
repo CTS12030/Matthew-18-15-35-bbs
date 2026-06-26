@@ -94,8 +94,13 @@
     #wipe { position: fixed; inset: 0; z-index: 90; pointer-events: none; display: flex; visibility: hidden; }
     #wipe.active { pointer-events: auto; visibility: visible; }
     .wipe-bar { flex: 1; height: 100%; transform: scaleY(0); transform-origin: top center;
+      will-change: transform; backface-visibility: hidden;
       background: linear-gradient(165deg, #f2a341, #e36a2d 48%, #7a2f12); }
     .wipe-bar:nth-child(even) { background: linear-gradient(165deg, #f6b65f, #d65f27 52%, #6a280f); }
+    /* While the wipe is covering/revealing, drop the expensive realtime blur on
+       glass cards so the reveal tween runs on an idle main thread (no jank). */
+    body.wiping .glass, body.wiping .glass-dark, body.wiping .parchment {
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 
     /* ===== Intro (Indrajaal-style marquee) ===== */
     #intro { position: relative; width: 100%; height: 100vh; height: 100dvh; z-index: 10; }
@@ -105,9 +110,12 @@
     /* multi-column auto-scrolling gallery */
     #intro-marquee { position: absolute; inset: -8% -2%; display: flex; gap: 18px; justify-content: center;
       transform: rotate(-4deg) scale(1.12); transform-origin: center; will-change: transform; }
-    .marquee-col { flex: 1; max-width: 320px; display: flex; flex-direction: column; gap: 18px; will-change: transform; }
+    /* Spacing via per-image margin-bottom (NOT flex gap) so duplicating the set
+       makes the column exactly 2x one set's height -> yPercent:-50 is a perfectly
+       seamless loop with zero jump, independent of image-load timing. */
+    .marquee-col { flex: 1; max-width: 320px; display: flex; flex-direction: column; gap: 0; will-change: transform; }
     .marquee-col img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px;
-      box-shadow: 0 16px 34px rgba(80,40,12,0.28); }
+      margin-bottom: 18px; box-shadow: 0 16px 34px rgba(80,40,12,0.28); }
     #intro-marquee.dimmed { filter: brightness(0.55) saturate(0.9); }
     #intro-marquee-scrim { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0;
       background: radial-gradient(circle at 50% 46%, rgba(20,10,4,0.10), rgba(20,10,4,0.62) 75%); }
@@ -143,6 +151,20 @@
     .deck-header { z-index: 35; opacity: 0; transition: opacity 0.5s ease; }
     body.deck-mode .deck-header { opacity: 1; }
 
+    /* ===== Fullscreen re-enter button ===== */
+    #fs-btn { position: fixed; top: 14px; right: 16px; z-index: 60; display: none;
+      align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px;
+      color: #fff; background: rgba(42, 22, 10, 0.42); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.16); cursor: pointer; pointer-events: auto;
+      -webkit-tap-highlight-color: transparent; transition: background 0.2s ease, transform 0.15s ease; }
+    #fs-btn:hover { background: rgba(42, 22, 10, 0.6); }
+    #fs-btn:active { transform: scale(0.92); }
+    #fs-btn svg { width: 20px; height: 20px; }
+    #fs-btn .fs-exit-icon { display: none; }
+    #fs-btn.is-fs .fs-enter-icon { display: none; }
+    #fs-btn.is-fs .fs-exit-icon { display: block; }
+    body.deck-mode #fs-btn { display: inline-flex; }
+
     /* ===== Segmented progress bar ===== */
     #segmented-progress { position: fixed; left: 0; right: 0; bottom: 0; z-index: 36; display: none;
       padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); gap: 6px;
@@ -168,9 +190,7 @@
     .slide.qa-discipline .answer-container { overflow: hidden !important; }
     .discipline-sections { position: relative; display: block; min-height: clamp(18rem, 39vh, 25rem); color: var(--text-1); list-style: none; margin: 0; padding: 0; }
     .discipline-section { position: absolute; inset: 0; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.78rem; align-items: start;
-      padding: 1.05rem 1.15rem; border-radius: 18px; border: 1px solid rgba(168, 96, 50, 0.18);
-      background: rgba(255, 247, 239, 0.52); box-shadow: inset 0 1px 0 rgba(255,255,255,0.52), 0 14px 34px rgba(60,30,10,0.14);
-      overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; }
+      padding: 0; overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; }
     .discipline-section.is-active { pointer-events: auto; }
     .discipline-marker { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; border-radius: 999px;
       background: rgba(42, 22, 10, 0.1); color: var(--text-1); font-size: 0.9rem; font-weight: 900; line-height: 1; }
@@ -555,9 +575,7 @@
       .slide.qa-discipline .discipline-section {
         grid-template-columns: 1.7rem minmax(0, 1fr) !important;
         gap: 0.62rem !important;
-        padding: 0.88rem 0.98rem !important;
-        border: 1px solid rgba(168, 96, 50, 0.2) !important;
-        background: rgba(255, 247, 239, 0.52) !important;
+        padding: 0 !important;
       }
       .slide.qa-discipline .discipline-marker {
         width: 1.52rem !important;
@@ -764,20 +782,26 @@
     <span class="uppercase text-warmText3">天国里的挽回与饶恕</span>
   </div>
 
+  <!-- Fullscreen toggle (re-enter fullscreen if it was exited mid-deck) -->
+  <button id="fs-btn" type="button" aria-label="全屏" title="全屏">
+    <svg class="fs-enter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
+    <svg class="fs-exit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+  </button>
+
   <div class="deck">
 
     <!-- ============ SLIDE 0: 章节选择 3D 轮播 ============ -->
     <section class="slide" data-title="章节选择" data-section="序幕">
       <img class="slide-bg" src="assets/bg_carousel.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.78), rgba(42,22,10,0.30) 55%, rgba(42,22,10,0.18))"></div>
-      <div class="slide-content flex flex-col justify-between p-6 md:p-10">
+      <div class="slide-content flex flex-col justify-center gap-8 p-6 md:p-10">
         <div class="text-center mt-2" data-in>
           <span class="text-warmAccent2 font-bold text-xs tracking-[0.3em] uppercase" style="text-shadow:0 2px 8px rgba(0,0,0,0.5)">Chapter Selection</span>
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-1" style="text-shadow:0 3px 16px rgba(0,0,0,0.5)">选择查经章节</h2>
           <p class="text-white/80 text-sm mt-1" style="text-shadow:0 2px 8px rgba(0,0,0,0.5)">拖拽卡片 · 点击两侧切换 · 点按钮进入</p>
         </div>
 
-        <div class="relative w-full flex-1 flex items-center justify-center perspective-1000 overflow-visible">
+        <div class="relative w-full h-[24rem] md:h-[27rem] flex items-center justify-center perspective-1000 overflow-visible">
           <div class="carousel-card absolute w-72 md:w-80 bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer preserve-3d" onclick="selectCarouselCard(0)">
             <div class="h-40 relative"><img src="assets/section1_1.jpg" alt="挽回弟兄" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4"><span class="bg-terracotta text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">第一部分</span></div></div>
@@ -857,7 +881,7 @@
       <img class="slide-bg" src="assets/bg_s1_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 1 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 1 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -893,7 +917,7 @@
       <img class="slide-bg" src="assets/bg_s1_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 2 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 2 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -927,7 +951,7 @@
       <img class="slide-bg" src="assets/bg_s1_q3.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 3 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 3 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -961,7 +985,7 @@
       <img class="slide-bg" src="assets/bg_s1_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 4 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 4 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -995,7 +1019,7 @@
       <img class="slide-bg" src="assets/bg_s1_q5.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 5 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 5 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -1030,7 +1054,7 @@
       <img class="slide-bg" src="assets/bg_s1_q6.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 6 / 6</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 挽回弟兄 · 问题 6 / 6</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:15-17</h4>
@@ -1111,7 +1135,7 @@
       <img class="slide-bg" src="assets/bg_s1_q6.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.42) 56%, rgba(42,22,10,0.18))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 新约实践</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第一部分 · 新约实践</div>
         <div class="practice-grid">
           <article class="practice-card practice-card-main is-visible glass parchment p-6 md:p-7" data-practice-step="1" data-in>
             <h3 class="text-xl md:text-3xl mb-4">新约教会怎样实践这件事？</h3>
@@ -1209,7 +1233,7 @@
       <img class="slide-bg" src="assets/bg_s2_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 1 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 1 / 4</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
@@ -1243,7 +1267,7 @@
       <img class="slide-bg" src="assets/bg_s2_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 2 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 2 / 4</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
@@ -1278,7 +1302,7 @@
       <img class="slide-bg" src="assets/bg_s2_q3.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 3 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 3 / 4</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
@@ -1328,7 +1352,7 @@
       <img class="slide-bg" src="assets/bg_s2_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 4 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第二部分 · 天国权柄 · 问题 4 / 4</div>
         <div class="qa-layout w-full max-w-6xl mx-auto">
           <aside class="qa-scripture glass rounded-2xl p-5 md:p-6 overflow-y-auto custom-scrollbar" data-in>
             <h4 class="font-serif text-warmText1 font-bold text-sm mb-3">经文 · 马太福音 18:18-20</h4>
@@ -1409,7 +1433,7 @@
       <img class="slide-bg" src="assets/bg_s3_q1.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 1 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 1 / 4</div>
         <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">彼得问“到七次可以吗”，为什么他觉得七次已经很多？“七十个七次”是不是代表第 491 次就可以不饶恕？</h2>
@@ -1433,7 +1457,7 @@
       <img class="slide-bg" src="assets/bg_s3_q2.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 2 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 2 / 4</div>
         <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">比喻中“一千万银子”和“十两银子”分别代表什么？</h2>
@@ -1457,7 +1481,7 @@
       <img class="slide-bg" src="assets/bg_s3_q4.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.92), rgba(42,22,10,0.45) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 3 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 3 / 4</div>
         <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">耶稣的比喻里称那个不饶恕的仆人是什么？后果是什么？</h2>
@@ -1481,7 +1505,7 @@
       <img class="slide-bg" src="assets/bg_s3_q5.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.9), rgba(42,22,10,0.4) 55%, rgba(42,22,10,0.2))"></div>
       <div class="slide-content flex flex-col justify-center p-6 md:p-12">
-        <div class="absolute top-16 left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 4 / 4</div>
+        <div class="absolute top-[69px] left-6 z-10 glass-dark rounded-full px-4 py-1.5 text-white text-xs font-bold tracking-wide" data-in>第三部分 · 终极饶恕 · 问题 4 / 4</div>
         <div class="w-full max-w-4xl mx-auto">
           <div class="glass rounded-2xl p-6 md:p-7" data-in>
             <h2 class="font-serif text-xl md:text-3xl font-bold text-warmText1 leading-relaxed">“从心里饶恕”是什么意思？</h2>
@@ -1595,21 +1619,17 @@
       const cols = gsap.utils.toArray('.marquee-col');
       if (!cols.length) return;
       cols.forEach((col, i) => {
-        // duplicate the image set once so the loop is seamless
+        // Duplicate the image set once. Each image carries equal margin-bottom
+        // (CSS), so the column height is exactly 2x one set -> yPercent:-50 lands
+        // the second copy precisely where the first started: a seamless loop with
+        // no jump, and no dependency on measuring sizes after images load.
         col.innerHTML += col.innerHTML;
         const up = i % 2 === 0;
         const dur = 26 + i * 4;
-        // Seamless distance = height of ONE original set + ONE row gap.
-        // Using -50% is wrong here because the flex `gap` adds an extra
-        // half-gap across the duplicate boundary, which causes a visible
-        // jump at the loop point. offsetHeight is a layout metric and is
-        // unaffected by the parent's rotate/scale transform.
-        const gap = parseFloat(getComputedStyle(col).rowGap) || 0;
-        const dist = (col.offsetHeight + gap) / 2;
-        if (reduceMotion) { gsap.set(col, { y: up ? -dist * 0.5 : 0 }); return; }
+        if (reduceMotion) { gsap.set(col, { yPercent: up ? -25 : 0 }); return; }
         const tw = gsap.fromTo(col,
-          { y: up ? 0 : -dist },
-          { y: up ? -dist : 0, duration: dur, ease: 'none', repeat: -1 });
+          { yPercent: up ? 0 : -50 },
+          { yPercent: up ? -50 : 0, duration: dur, ease: 'none', repeat: -1 });
         marqueeTweens.push(tw);
       });
     }
@@ -1676,6 +1696,33 @@
       } catch (e) {}
     }
 
+    function isFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement);
+    }
+    function exitAppFullscreen() {
+      try {
+        const ex = document.exitFullscreen || document.webkitExitFullscreen;
+        if (ex) { const p = ex.call(document); if (p && p.catch) p.catch(function(){}); }
+      } catch (e) {}
+    }
+    function toggleAppFullscreen() {
+      if (isFullscreen()) exitAppFullscreen(); else requestAppFullscreen();
+    }
+    function syncFsButton() {
+      const btn = document.getElementById('fs-btn');
+      if (!btn) return;
+      btn.classList.toggle('is-fs', isFullscreen());
+      btn.setAttribute('title', isFullscreen() ? '退出全屏' : '全屏');
+      btn.setAttribute('aria-label', isFullscreen() ? '退出全屏' : '全屏');
+    }
+    (function initFsButton() {
+      const btn = document.getElementById('fs-btn');
+      if (btn) btn.addEventListener('click', toggleAppFullscreen);
+      document.addEventListener('fullscreenchange', syncFsButton);
+      document.addEventListener('webkitfullscreenchange', syncFsButton);
+      syncFsButton();
+    })();
+
     function enterDeck() {
       if (deckEntering || document.body.classList.contains('deck-mode')) return;
       requestAppFullscreen();
@@ -1697,8 +1744,9 @@
       const bars = gsap.utils.toArray('.wipe-bar');
       const coverDurs = [0.42, 0.62, 0.48, 0.58];   // different speeds per bar (in)
       const revealDurs = [0.55, 0.4, 0.6, 0.46];     // different speeds per bar (out)
-      const reset = () => { wipe.classList.remove('active'); gsap.set(bars, { scaleY: 0, transformOrigin: 'top center' }); deckEntering = false; };
+      const reset = () => { wipe.classList.remove('active'); document.body.classList.remove('wiping'); gsap.set(bars, { scaleY: 0, transformOrigin: 'top center' }); deckEntering = false; };
       if (reduceMotion) { goLive(); reset(); return; }
+      document.body.classList.add('wiping');
       wipe.classList.add('active');
       gsap.set(bars, { scaleY: 0, transformOrigin: 'top center' });
       // Phase 1: bars wipe down to cover the screen at different speeds
@@ -1709,15 +1757,19 @@
         stagger: 0.05,
         onComplete: () => {
           goLive();
-          // decouple from this tween so deck-mode layout change can't freeze the reveal
+          // While fully covered, let the browser paint/composite the freshly shown
+          // deck (glass cards, entrance anims, fullscreen resize) over two frames
+          // BEFORE starting the reveal, so the reveal runs on an idle main thread.
           requestAnimationFrame(() => {
-            gsap.set(bars, { transformOrigin: 'bottom center' });
-            gsap.to(bars, {
-              scaleY: 0,
-              ease: 'power3.inOut',
-              duration: (i) => revealDurs[i % revealDurs.length],
-              stagger: 0.05,
-              onComplete: reset
+            requestAnimationFrame(() => {
+              gsap.set(bars, { transformOrigin: 'bottom center' });
+              gsap.to(bars, {
+                scaleY: 0,
+                ease: 'power3.inOut',
+                duration: (i) => revealDurs[i % revealDurs.length],
+                stagger: 0.05,
+                onComplete: reset
+              });
             });
           });
         }
