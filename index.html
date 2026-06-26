@@ -74,8 +74,10 @@
     .slide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; will-change: transform; }
     .slide-scrim { position: absolute; inset: 0; z-index: 1; }
     .slide-content { position: relative; z-index: 2; width: 100%; height: 100%; }
-    /* Nudge the prologue (chapter selection) content down so it sits lower in fullscreen */
-    .slide[data-section="序幕"] .slide-content { transform: translateY(20px); }
+    /* Fullscreen gives extra vertical room: push every slide's content down a bit. */
+    .deck .slide-content { transform: translateY(30px); }
+    /* Prologue (chapter selection) sits lower still. */
+    .slide[data-section="序幕"] .slide-content { transform: translateY(50px); }
 
     /* ===== Scrollbars ===== */
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -1626,7 +1628,7 @@
         // no jump, and no dependency on measuring sizes after images load.
         col.innerHTML += col.innerHTML;
         const up = i % 2 === 0;
-        const dur = 26 + i * 4;
+        const dur = (26 + i * 4) * 1.25;   // 25% slower scroll
         if (reduceMotion) { gsap.set(col, { yPercent: up ? -25 : 0 }); return; }
         const tw = gsap.fromTo(col,
           { yPercent: up ? 0 : -50 },
