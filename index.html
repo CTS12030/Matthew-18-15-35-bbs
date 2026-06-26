@@ -156,11 +156,11 @@
     .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
     .discipline-sections { display: grid; gap: 0.72rem; color: var(--text-1); }
     .discipline-section { display: block; padding: 0.72rem 0.85rem; border-radius: 14px; border: 1px solid rgba(168, 96, 50, 0.16); background: rgba(255, 247, 239, 0.34); }
-    .discipline-section h5 { font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.35; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
+    .discipline-section h5 { font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.35; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
     .discipline-section p { margin-top: 0.28rem; }
     .scripture-ref { display: inline-block; margin-top: 0.38rem; font-size: 0.92rem; font-weight: 800; color: var(--text-2); }
-    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.46; color: var(--text-1); }
-    .discipline-note { font-size: clamp(1.08rem, 2.05vw, 1.48rem); line-height: 1.44; font-weight: 600; color: var(--text-1); }
+    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.46; color: var(--text-1); }
+    .discipline-note { font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.44; font-weight: 600; color: var(--text-1); }
 
     /* ===== New Testament practice slide ===== */
     .practice-grid { width: min(1120px, 100%); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(21rem, 27rem); grid-template-rows: auto auto auto; gap: 1rem; align-items: stretch; }
@@ -531,7 +531,7 @@
         border-radius: 12px !important;
       }
       .slide.qa-discipline .discipline-section h5 {
-        font-size: clamp(1.08rem, 2.05vw, 1.48rem) !important;
+        font-size: clamp(1rem, 1.88vw, 1.34rem) !important;
         line-height: 1.34 !important;
         margin-bottom: 0.24rem !important;
       }
@@ -541,7 +541,7 @@
       }
       .slide.qa-discipline .scripture-text,
       .slide.qa-discipline .discipline-note {
-        font-size: clamp(1.08rem, 2.05vw, 1.48rem) !important;
+        font-size: clamp(1rem, 1.88vw, 1.34rem) !important;
         line-height: 1.36 !important;
       }
       .practice-slide .slide-content {
@@ -1144,7 +1144,7 @@
                 <path class="aw-timer__ring" id="aw-ring" stroke-dasharray="283 283" d="M 50,50 m -45,0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"/>
               </svg>
               <div class="aw-timer__label">
-                <span class="aw-timer__time" id="aw-time">15:00</span>
+                <span class="aw-timer__time" id="aw-time">25:00</span>
               </div>
             </div>
           </div>
@@ -1344,7 +1344,7 @@
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
             <div class="glass-timer__digits" id="glass-digits">
-              <span class="gt-num" id="gt-m1">1</span><span class="gt-num" id="gt-m2">5</span>
+              <span class="gt-num" id="gt-m1">2</span><span class="gt-num" id="gt-m2">5</span>
               <span class="gt-sep">:</span>
               <span class="gt-num" id="gt-s1">0</span><span class="gt-num" id="gt-s2">0</span>
             </div>
@@ -1481,7 +1481,7 @@
       <img class="slide-bg" src="assets/bg_conclusion.jpg" alt="">
       <div class="slide-scrim" style="background:linear-gradient(to top, rgba(42,22,10,0.7), rgba(42,22,10,0.35) 50%, rgba(42,22,10,0.25))"></div>
       <div class="slide-content flex items-center justify-center text-center p-8">
-        <div class="max-w-3xl mx-auto" data-in>
+        <div class="max-w-5xl mx-auto" data-in>
           <span class="text-warmAccent2 font-bold text-xs tracking-[0.3em] uppercase" style="text-shadow:0 2px 8px rgba(0,0,0,0.5)">Conclusion</span>
           <h1 class="font-serif text-3xl md:text-5xl font-extrabold text-white leading-tight mt-3" style="text-shadow:0 4px 20px rgba(0,0,0,0.55)">在爱中挽回，在恩典中饶恕</h1>
           <div class="w-16 h-1 bg-warmAccent2 mx-auto rounded-full my-6"></div>
@@ -1515,6 +1515,7 @@
 
     const deckEl = document.querySelector('.deck');
     const slides = Array.from(deckEl.querySelectorAll('.slide'));
+    let activeBgTween = null;
 
     /* ---------- Sections / segmented progress ---------- */
     const sections = [];
@@ -1763,12 +1764,20 @@
       const bg = slide.querySelector('.slide-bg');
       const ins = slide.querySelectorAll('[data-in]');
       const qrows = slide.querySelectorAll('.qrow');
+      if (activeBgTween) {
+        activeBgTween.kill();
+        activeBgTween = null;
+      }
       if (reduceMotion) {
         if (bg) gsap.set(bg, { scale: 1 });
         gsap.set(ins, { opacity: 1, y: 0, filter: 'none' });
         gsap.set(qrows, { opacity: 1, x: 0 });
       } else {
-        if (bg) gsap.fromTo(bg, { scale: 1.14 }, { scale: 1, duration: 7, ease: 'none' });
+        if (bg) {
+          activeBgTween = gsap.fromTo(bg,
+            { scale: 1.08, transformOrigin: '50% 50%' },
+            { scale: 1.02, duration: 12, ease: 'sine.inOut', repeat: -1, yoyo: true, overwrite: true });
+        }
         gsap.fromTo(ins, { opacity: 0, y: 34, filter: 'blur(10px)' },
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.08 });
         if (qrows.length) gsap.fromTo(qrows, { opacity: 0, x: 24 },
@@ -2032,12 +2041,14 @@
     }
     updateCarousel();
 
-    /* ========== Discussion Timers (click-to-start, 15 min each) ========== */
-    const TIMER_SECS = 15 * 60;
+    /* ========== Discussion Timers (click-to-start, 25 min each) ========== */
+    const TIMER_SECS = 25 * 60;
     var activeBgm = null;
     var activeTimerIdx = -1;
+    var timerEndTimeout = null;
 
     function stopAllTimers() {
+      if (timerEndTimeout) { clearTimeout(timerEndTimeout); timerEndTimeout = null; }
       if (activeBgm) { activeBgm.pause(); activeBgm.currentTime = 0; activeBgm = null; }
       var dvd = document.getElementById('dvd-icon');
       dvd.classList.remove('spinning');
@@ -2054,20 +2065,25 @@
       activeTimerIdx = -1;
     }
 
+    function armTimerStop(idx) {
+      if (timerEndTimeout) clearTimeout(timerEndTimeout);
+      timerEndTimeout = setTimeout(function() {
+        if (activeTimerIdx === idx) stopAllTimers();
+      }, (TIMER_SECS + 1) * 1000);
+    }
+
     function playBgm(id) {
       if (activeBgm) { activeBgm.pause(); activeBgm.currentTime = 0; }
       var audio = document.getElementById(id);
       activeBgm = audio;
       audio.volume = 0.35;
+      audio.loop = true;
       audio.play().catch(function(){});
       var dvd = document.getElementById('dvd-icon');
       dvd.classList.add('visible');
       dvd.classList.remove('spinning');
       setTimeout(function() { dvd.classList.add('spinning'); }, 1000);
-      audio.onended = function() {
-        dvd.classList.remove('spinning');
-        setTimeout(function() { dvd.classList.remove('visible'); }, 2000);
-      };
+      audio.onended = null;
     }
 
     // Slide-leave detection: stop timers when navigating away from the overview slide
@@ -2081,10 +2097,13 @@
 
     // --- Timer 1: FlipClock.js (terracotta flip counter) ---
     let fc1;
-    (function initFlip() {
+    function initFlip() {
+      const mount = document.getElementById('timer1-mount');
+      if (fc1 && fc1.timer) { try { fc1.stop(); } catch(e){} }
+      mount.innerHTML = '';
       const { counter, css, flipClock, theme } = FlipClock;
       fc1 = flipClock({
-        parent: document.getElementById('timer1-mount'),
+        parent: mount,
         autoStart: false,
         face: counter({
           value: TIMER_SECS,
@@ -2101,24 +2120,39 @@
           css: css({ fontSize: '2.2rem' })
         })
       });
-    })();
+    }
+    initFlip();
     function startTimer1(el) {
       if (el.classList.contains('running')) { stopAllTimers(); return; }
       stopAllTimers();
+      initFlip();
       el.classList.add('running');
       fc1.start();
       playBgm('bgm1');
       activeTimerIdx = 1;
+      armTimerStop(1);
     }
 
     // --- Timer 2: Apple Watch SVG ring ---
     let aw2 = { left: TIMER_SECS, iv: null };
+    function resetAwTimerDisplay() {
+      const ring = document.getElementById('aw-ring');
+      const label = document.getElementById('aw-time');
+      if (ring) {
+        ring.setAttribute('stroke-dasharray', '283 283');
+        ring.style.stroke = '';
+      }
+      if (label) label.textContent = '25:00';
+    }
     function startTimer2(el) {
       if (el.classList.contains('running')) { stopAllTimers(); return; }
       stopAllTimers();
+      aw2.left = TIMER_SECS;
+      resetAwTimerDisplay();
       el.classList.add('running');
       playBgm('bgm2');
       activeTimerIdx = 2;
+      armTimerStop(2);
       const ring = document.getElementById('aw-ring');
       const label = document.getElementById('aw-time');
       const FULL = 283;
@@ -2148,9 +2182,13 @@
     function startTimer3(el) {
       if (el.classList.contains('running')) { stopAllTimers(); return; }
       stopAllTimers();
+      gt3.left = TIMER_SECS;
+      document.getElementById('glass-digits').style.color = '';
+      updateGlass();
       el.classList.add('running');
       playBgm('bgm3');
       activeTimerIdx = 3;
+      armTimerStop(3);
       gt3.iv = setInterval(function() {
         gt3.left--;
         if (gt3.left < 0) { gt3.left = 0; clearInterval(gt3.iv); }
@@ -2198,8 +2236,8 @@
   </script>
   <!-- DVD icon + audio elements -->
   <div class="dvd-icon" id="dvd-icon"><img src="assets/dvd_icon.png" alt="DVD"></div>
-  <audio id="bgm1" preload="none" src="assets/bgm_part1.mp3"></audio>
-  <audio id="bgm2" preload="none" src="assets/bgm_part2.mp3"></audio>
-  <audio id="bgm3" preload="none" src="assets/bgm_part3.mp3"></audio>
+  <audio id="bgm1" preload="none" loop src="assets/bgm_part1.mp3"></audio>
+  <audio id="bgm2" preload="none" loop src="assets/bgm_part2.mp3"></audio>
+  <audio id="bgm3" preload="none" loop src="assets/bgm_part3.mp3"></audio>
 </body>
 </html>
