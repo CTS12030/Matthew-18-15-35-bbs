@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="马太18查经">
+  <defs>
+    <linearGradient id="bg" x1="70" y1="52" x2="438" y2="462" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f3b262"/>
+      <stop offset="0.48" stop-color="#c85a49"/>
+      <stop offset="1" stop-color="#2a160a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="36%" r="58%">
+      <stop offset="0" stop-color="#fff7ef" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#fff7ef" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+  <path d="M157 150c0-22 18-40 40-40h162c18 0 32 14 32 32v214c0 18-14 32-32 32H197c-22 0-40-18-40-40V150Z" fill="#fff7ef" opacity="0.92"/>
+  <path d="M197 110c-22 0-40 18-40 40v198c0 22 18 40 40 40h154" fill="none" stroke="#2a160a" stroke-opacity="0.18" stroke-width="18" stroke-linecap="round"/>
+  <path d="M256 154v177M210 209h92" stroke="#2a160a" stroke-width="24" stroke-linecap="round"/>
+  <path d="M345 135v230" stroke="#c85a49" stroke-opacity="0.38" stroke-width="18" stroke-linecap="round"/>
+</svg>

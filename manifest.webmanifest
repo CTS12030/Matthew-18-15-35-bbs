@@ -1,0 +1,26 @@
+{
+  "name": "马太福音 18:15-35 查经",
+  "short_name": "马太18查经",
+  "description": "马太福音 18:15-35 查经 HTML 投屏简报",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#2a160a",
+  "theme_color": "#2a160a",
+  "icons": [
+    {
+      "src": "assets/dvd_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

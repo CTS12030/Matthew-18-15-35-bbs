@@ -2,9 +2,16 @@
 <html lang="zh-CN" data-theme="sunset-warm">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a160a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="马太18查经">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>马太福音 18:15-35 查经</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e36a2d'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white'%3E%E2%9C%9D%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/dvd_icon.png">
   <link rel="stylesheet" href="assets/fonts.css">
   <link rel="stylesheet" href="assets/base.css">
   <link rel="stylesheet" id="theme-link" href="assets/themes/sunset-warm.css">
@@ -154,14 +161,24 @@
     .qa-main { min-width: 0; grid-column: 1; grid-row: 1; }
     .qa-scripture { max-height: 58vh; grid-column: 2; grid-row: 1; }
     .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
-    .discipline-sections { display: grid; gap: 0.55rem; color: var(--text-1); list-style: none; margin: 0; padding: 0; }
-    .discipline-section { display: grid; grid-template-columns: 1.35rem minmax(0, 1fr); gap: 0.48rem; align-items: start; padding: 0; border: 0; background: transparent; }
-    .discipline-marker { display: inline-flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgba(200, 90, 73, 0.16); color: var(--text-2); font-size: 0.72rem; font-weight: 800; line-height: 1; }
-    .discipline-section h5 { font-size: clamp(0.9rem, 1.25vw, 1rem); line-height: 1.34; font-weight: 800; margin-bottom: 0.22rem; color: var(--text-1); }
-    .discipline-section p { margin-top: 0.18rem; }
-    .scripture-ref { display: inline-block; margin-top: 0.24rem; font-size: clamp(0.9rem, 1.25vw, 1rem); line-height: 1.34; font-weight: 800; color: var(--text-2); }
-    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(0.9rem, 1.25vw, 1rem); line-height: 1.34; color: var(--text-1); }
-    .discipline-note { font-size: clamp(0.9rem, 1.25vw, 1rem); line-height: 1.34; font-weight: 500; color: var(--text-1); }
+    .discipline-card-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem; }
+    .discipline-card-head h4 { margin-bottom: 0 !important; }
+    .discipline-step-indicator { flex: 0 0 auto; min-width: 3.2rem; text-align: center; border-radius: 999px; padding: 0.28rem 0.7rem;
+      background: rgba(42, 22, 10, 0.08); color: var(--text-2); font-size: 0.82rem; font-weight: 800; }
+    .slide.qa-discipline .answer-container { overflow: hidden !important; }
+    .discipline-sections { position: relative; display: block; min-height: clamp(18rem, 39vh, 25rem); color: var(--text-1); list-style: none; margin: 0; padding: 0; }
+    .discipline-section { position: absolute; inset: 0; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.78rem; align-items: start;
+      padding: 1.05rem 1.15rem; border-radius: 18px; border: 1px solid rgba(168, 96, 50, 0.18);
+      background: rgba(255, 247, 239, 0.52); box-shadow: inset 0 1px 0 rgba(255,255,255,0.52), 0 14px 34px rgba(60,30,10,0.14);
+      overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; }
+    .discipline-section.is-active { pointer-events: auto; }
+    .discipline-marker { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; border-radius: 999px;
+      background: rgba(42, 22, 10, 0.1); color: var(--text-1); font-size: 0.9rem; font-weight: 900; line-height: 1; }
+    .discipline-section h5 { font-size: clamp(1.12rem, 1.65vw, 1.28rem); line-height: 1.35; font-weight: 850; margin-bottom: 0.42rem; color: var(--text-1); }
+    .discipline-section p { margin-top: 0.28rem; }
+    .scripture-ref { display: inline-block; margin-top: 0.4rem; font-size: clamp(1.02rem, 1.45vw, 1.16rem); line-height: 1.38; font-weight: 800; color: var(--text-2); }
+    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(1.02rem, 1.45vw, 1.16rem); line-height: 1.43; color: var(--text-1); }
+    .discipline-note { font-size: clamp(1.02rem, 1.45vw, 1.16rem); line-height: 1.43; font-weight: 500; color: var(--text-1); }
 
     /* ===== New Testament practice slide ===== */
     .practice-grid { width: min(1120px, 100%); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(21rem, 27rem); grid-template-rows: auto auto auto; gap: 1rem; align-items: stretch; }
@@ -520,39 +537,47 @@
         margin-top: 14px !important;
       }
       .slide.qa-discipline .answer-container {
-        max-height: 50vh !important;
+        max-height: 52vh !important;
+        overflow: hidden !important;
+      }
+      .slide.qa-discipline .discipline-card-head {
+        margin-bottom: 0.65rem !important;
+      }
+      .slide.qa-discipline .discipline-step-indicator {
+        font-size: 0.78rem !important;
+        padding: 0.22rem 0.58rem !important;
       }
       .slide.qa-discipline .discipline-sections {
-        gap: 0.38rem !important;
-        font-size: 0.92rem !important;
-        line-height: 1.3 !important;
+        min-height: 35vh !important;
+        font-size: 1.05rem !important;
+        line-height: 1.38 !important;
       }
       .slide.qa-discipline .discipline-section {
-        grid-template-columns: 1.2rem minmax(0, 1fr) !important;
-        gap: 0.38rem !important;
-        padding: 0 !important;
-        border: 0 !important;
-        background: transparent !important;
+        grid-template-columns: 1.7rem minmax(0, 1fr) !important;
+        gap: 0.62rem !important;
+        padding: 0.88rem 0.98rem !important;
+        border: 1px solid rgba(168, 96, 50, 0.2) !important;
+        background: rgba(255, 247, 239, 0.52) !important;
       }
       .slide.qa-discipline .discipline-marker {
-        width: 1.08rem !important;
-        height: 1.08rem !important;
-        font-size: 0.62rem !important;
+        width: 1.52rem !important;
+        height: 1.52rem !important;
+        font-size: 0.78rem !important;
       }
       .slide.qa-discipline .discipline-section h5 {
-        font-size: 0.92rem !important;
-        line-height: 1.3 !important;
-        margin-bottom: 0.12rem !important;
+        font-size: 1.15rem !important;
+        line-height: 1.32 !important;
+        margin-bottom: 0.3rem !important;
       }
       .slide.qa-discipline .scripture-ref {
-        font-size: 0.92rem !important;
-        line-height: 1.3 !important;
-        margin-top: 0.16rem !important;
+        font-size: 1.02rem !important;
+        line-height: 1.35 !important;
+        margin-top: 0.3rem !important;
       }
       .slide.qa-discipline .scripture-text,
       .slide.qa-discipline .discipline-note {
-        font-size: 0.92rem !important;
-        line-height: 1.3 !important;
+        font-size: 1.02rem !important;
+        line-height: 1.36 !important;
       }
       .practice-slide .slide-content {
         padding: 72px 58px 82px !important;
@@ -1020,9 +1045,12 @@
             <h2 class="font-serif text-lg md:text-2xl font-bold text-warmText1 leading-relaxed">最后“看他像外邦人和税吏”是什么意思？为什么这么强调教会必须处理罪？</h2>
             <p class="text-terracotta text-xs md:text-sm mt-3 font-semibold">📖 经文依据：马太福音 18:17</p>
           </div>
-          <div class="answer-container glass rounded-2xl p-5 md:p-6 mt-4 overflow-y-auto custom-scrollbar" style="max-height:50vh">
-            <h4 class="text-terracotta font-bold text-sm mb-3">💡 查经要点</h4>
-            <ul class="discipline-sections">
+          <div class="answer-container glass rounded-2xl p-5 md:p-6 mt-4 custom-scrollbar" style="max-height:52vh">
+            <div class="discipline-card-head">
+              <h4 class="text-terracotta font-bold text-sm">💡 查经要点</h4>
+              <span class="discipline-step-indicator" data-discipline-status>1 / 4</span>
+            </div>
+            <ul class="discipline-sections" data-discipline-cards>
               <li class="answer-point discipline-section">
                 <span class="discipline-marker">1</span>
                 <div>
@@ -1463,7 +1491,7 @@
             <h4 class="text-sageGreen font-bold text-sm mb-3">💡 查经要点</h4>
             <ul class="space-y-3 text-warmText1 text-sm md:text-base">
               <li class="answer-point flex gap-2"><span class="text-sageGreen font-bold">•</span><span><strong>非表面敷衍：</strong>不是表面说“没事”，心里继续记恨、翻旧账。</span></li>
-              <li class="answer-point flex gap-2"><span class="text-sageGreen font-bold">•</span><span><strong>非虚假礼貌：</strong>不是外面维持礼貌，里面不断审判定罪对方。</span></li>
+              <li class="answer-point flex gap-2"><span class="text-sageGreen font-bold">•</span><span><strong>福音反省：</strong>如果我们不饶恕，那我们是不是在选择性的接受福音，选择性的接受神。</span></li>
               <li class="answer-point flex gap-2"><span class="text-sageGreen font-bold">•</span><span><strong>交出审判权：</strong>把审判权和报复权交给神，不再用苦毒、报复、冷漠捆绑对方，也释放了自己。</span></li>
             </ul>
           </div>
@@ -1571,10 +1599,17 @@
         col.innerHTML += col.innerHTML;
         const up = i % 2 === 0;
         const dur = 26 + i * 4;
-        if (reduceMotion) { gsap.set(col, { yPercent: up ? -25 : 0 }); return; }
+        // Seamless distance = height of ONE original set + ONE row gap.
+        // Using -50% is wrong here because the flex `gap` adds an extra
+        // half-gap across the duplicate boundary, which causes a visible
+        // jump at the loop point. offsetHeight is a layout metric and is
+        // unaffected by the parent's rotate/scale transform.
+        const gap = parseFloat(getComputedStyle(col).rowGap) || 0;
+        const dist = (col.offsetHeight + gap) / 2;
+        if (reduceMotion) { gsap.set(col, { y: up ? -dist * 0.5 : 0 }); return; }
         const tw = gsap.fromTo(col,
-          { yPercent: up ? 0 : -50 },
-          { yPercent: up ? -50 : 0, duration: dur, ease: 'none', repeat: -1 });
+          { y: up ? 0 : -dist },
+          { y: up ? -dist : 0, duration: dur, ease: 'none', repeat: -1 });
         marqueeTweens.push(tw);
       });
     }
@@ -1628,8 +1663,22 @@
 
     /* ---------- Enter deck (warm mask-wipe transition) ---------- */
     let deckEntering = false;
+    // Request real fullscreen. MUST be called synchronously inside a user
+    // gesture (click/tap), otherwise browsers reject it. Handles vendor
+    // prefixes; on platforms without the Fullscreen API (e.g. iPhone Safari)
+    // it silently no-ops — there the installed PWA standalone mode is used.
+    function requestAppFullscreen() {
+      try {
+        if (document.fullscreenElement || document.webkitFullscreenElement) return;
+        const el = document.documentElement;
+        const req = el.requestFullscreen || el.webkitRequestFullscreen || el.webkitRequestFullScreen;
+        if (req) { const p = req.call(el); if (p && p.catch) p.catch(function(){}); }
+      } catch (e) {}
+    }
+
     function enterDeck() {
       if (deckEntering || document.body.classList.contains('deck-mode')) return;
+      requestAppFullscreen();
       deckEntering = true;
       const wipe = document.getElementById('wipe');
       const goLive = () => {
@@ -1887,6 +1936,81 @@
       return true;
     }
 
+    /* ---------- Discipline answer card stack ---------- */
+    function setDisciplineStatus(slide, index, total) {
+      const status = slide && slide.querySelector('[data-discipline-status]');
+      if (status) status.textContent = (index + 1) + ' / ' + total;
+    }
+    function resetDisciplineCards(slide) {
+      if (!slide || !slide.classList.contains('qa-discipline')) return;
+      const cards = slide.querySelectorAll('.discipline-section');
+      slide.dataset.disciplineCardIndex = '0';
+      delete slide.dataset.disciplineAnimating;
+      setDisciplineStatus(slide, 0, cards.length || 4);
+      cards.forEach(function(card) { card.classList.remove('is-active'); });
+      gsap.set(cards, { autoAlpha: 0, x: 0, y: 18, scale: 0.98, filter: 'blur(8px)' });
+    }
+    function showDisciplineCard(slide, index, fromRight) {
+      const cards = Array.from(slide.querySelectorAll('.discipline-section'));
+      const card = cards[index];
+      if (!card) return false;
+      cards.forEach(function(item, i) {
+        if (i !== index) {
+          item.classList.remove('is-active');
+          gsap.set(item, { autoAlpha: 0, x: 0, y: 18, scale: 0.98, filter: 'blur(8px)' });
+        }
+      });
+      card.classList.add('is-active');
+      slide.dataset.disciplineCardIndex = String(index);
+      setDisciplineStatus(slide, index, cards.length);
+      if (reduceMotion) {
+        gsap.set(card, { autoAlpha: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' });
+        delete slide.dataset.disciplineAnimating;
+      } else {
+        slide.dataset.disciplineAnimating = 'true';
+        gsap.fromTo(card,
+          { autoAlpha: 0, x: fromRight ? 26 : 0, y: fromRight ? 0 : 18, scale: 0.98, filter: 'blur(8px)' },
+          {
+            autoAlpha: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)',
+            duration: 0.44, ease: 'power2.out',
+            onComplete: function() { delete slide.dataset.disciplineAnimating; }
+          });
+      }
+      return true;
+    }
+    function advanceDisciplineCard(slide) {
+      if (!slide || !slide.classList.contains('qa-discipline')) return false;
+      const ac = slide.querySelector('.answer-container');
+      if (!ac || !ac.classList.contains('answer-shown')) return false;
+      if (slide.dataset.disciplineAnimating === 'true') return true;
+      const cards = Array.from(slide.querySelectorAll('.discipline-section'));
+      if (!cards.length) return false;
+      const current = Math.max(0, Math.min(cards.length - 1, Number(slide.dataset.disciplineCardIndex || 0)));
+      if (current >= cards.length - 1) return false;
+      const currentCard = cards[current];
+      const nextIndex = current + 1;
+      if (reduceMotion) {
+        currentCard.classList.remove('is-active');
+        gsap.set(currentCard, { autoAlpha: 0, x: 0, y: 18, scale: 0.98, filter: 'blur(8px)' });
+        return showDisciplineCard(slide, nextIndex, true);
+      }
+      slide.dataset.disciplineAnimating = 'true';
+      gsap.to(currentCard, {
+        autoAlpha: 0,
+        x: -24,
+        scale: 0.98,
+        filter: 'blur(6px)',
+        duration: 0.24,
+        ease: 'power2.in',
+        onComplete: function() {
+          currentCard.classList.remove('is-active');
+          gsap.set(currentCard, { x: 0, y: 18 });
+          showDisciplineCard(slide, nextIndex, true);
+        }
+      });
+      return true;
+    }
+
     /* ---------- Answer reveal ---------- */
     function revealAnswer(slide) {
       const ac = slide.querySelector('.answer-container');
@@ -1894,14 +2018,21 @@
       ac.classList.add('answer-shown');
       const pts = ac.querySelectorAll('.answer-point');
       const btn = slide.querySelector('.reveal-btn');
+      const disciplineMode = slide.classList.contains('qa-discipline');
+      if (disciplineMode) resetDisciplineCards(slide);
       if (reduceMotion) {
         gsap.set(ac, { opacity: 1 });
-        gsap.set(pts, { opacity: 1, x: 0, filter: 'none' });
+        if (disciplineMode) showDisciplineCard(slide, 0, false);
+        else gsap.set(pts, { opacity: 1, x: 0, filter: 'none' });
       } else {
         gsap.fromTo(ac, { opacity: 0, y: 30, filter: 'blur(8px)' },
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' });
-        gsap.fromTo(pts, { opacity: 0, x: -16, filter: 'blur(6px)' },
-          { opacity: 1, x: 0, filter: 'blur(0px)', stagger: 0.12, duration: 0.45, ease: 'power2.out', delay: 0.1 });
+        if (disciplineMode) {
+          gsap.delayedCall(0.12, function() { showDisciplineCard(slide, 0, false); });
+        } else {
+          gsap.fromTo(pts, { opacity: 0, x: -16, filter: 'blur(6px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', stagger: 0.12, duration: 0.45, ease: 'power2.out', delay: 0.1 });
+        }
       }
       if (btn) { btn.textContent = '下一题 →'; btn.classList.add('opacity-80'); }
     }
@@ -1912,6 +2043,7 @@
         if (ac && ac.classList.contains('answer-shown')) {
           ac.classList.remove('answer-shown');
           gsap.set(ac, { opacity: 0 });
+          resetDisciplineCards(s);
           const b = s.querySelector('.reveal-btn');
           if (b) { b.textContent = '显示答案'; b.classList.remove('opacity-80'); }
         }
@@ -1977,6 +2109,10 @@
       const ac = active.querySelector('.answer-container');
       if (ac && !ac.classList.contains('answer-shown')) {
         if (isForward) { revealAnswer(active); e.preventDefault(); e.stopImmediatePropagation(); }
+        return;
+      }
+      if (isForward && advanceDisciplineCard(active)) {
+        e.preventDefault(); e.stopImmediatePropagation();
         return;
       }
       if (isForward && revealSupportVerses(active)) {
