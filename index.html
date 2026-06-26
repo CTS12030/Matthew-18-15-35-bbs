@@ -154,13 +154,14 @@
     .qa-main { min-width: 0; grid-column: 1; grid-row: 1; }
     .qa-scripture { max-height: 58vh; grid-column: 2; grid-row: 1; }
     .qa-scripture-text { font-size: 0.92rem; line-height: 1.55; }
-    .discipline-sections { display: grid; gap: 0.72rem; color: var(--text-1); }
-    .discipline-section { display: block; padding: 0.72rem 0.85rem; border-radius: 14px; border: 1px solid rgba(168, 96, 50, 0.16); background: rgba(255, 247, 239, 0.34); }
-    .discipline-section h5 { font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.35; font-weight: 800; margin-bottom: 0.42rem; color: var(--text-1); }
-    .discipline-section p { margin-top: 0.28rem; }
-    .scripture-ref { display: inline-block; margin-top: 0.38rem; font-size: 0.92rem; font-weight: 800; color: var(--text-2); }
-    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.46; color: var(--text-1); }
-    .discipline-note { font-size: clamp(1rem, 1.88vw, 1.34rem); line-height: 1.44; font-weight: 600; color: var(--text-1); }
+    .discipline-sections { display: grid; gap: 0.55rem; color: var(--text-1); list-style: none; margin: 0; padding: 0; }
+    .discipline-section { display: grid; grid-template-columns: 1.35rem minmax(0, 1fr); gap: 0.48rem; align-items: start; padding: 0; border: 0; background: transparent; }
+    .discipline-marker { display: inline-flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgba(200, 90, 73, 0.16); color: var(--text-2); font-size: 0.72rem; font-weight: 800; line-height: 1; }
+    .discipline-section h5 { font-size: clamp(0.82rem, 1.35vw, 1rem); line-height: 1.32; font-weight: 800; margin-bottom: 0.22rem; color: var(--text-1); }
+    .discipline-section p { margin-top: 0.18rem; }
+    .scripture-ref { display: inline-block; margin-top: 0.24rem; font-size: 0.72rem; font-weight: 800; color: var(--text-2); }
+    .scripture-text { font-family: "Noto Serif SC", serif; font-size: clamp(0.76rem, 1.2vw, 0.92rem); line-height: 1.36; color: var(--text-1); }
+    .discipline-note { font-size: clamp(0.76rem, 1.2vw, 0.92rem); line-height: 1.34; font-weight: 500; color: var(--text-1); }
 
     /* ===== New Testament practice slide ===== */
     .practice-grid { width: min(1120px, 100%); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(21rem, 27rem); grid-template-rows: auto auto auto; gap: 1rem; align-items: stretch; }
@@ -522,27 +523,35 @@
         max-height: 50vh !important;
       }
       .slide.qa-discipline .discipline-sections {
-        gap: 0.48rem !important;
-        font-size: 0.86rem !important;
-        line-height: 1.38 !important;
+        gap: 0.38rem !important;
+        font-size: 0.76rem !important;
+        line-height: 1.3 !important;
       }
       .slide.qa-discipline .discipline-section {
-        padding: 0.52rem 0.66rem !important;
-        border-radius: 12px !important;
+        grid-template-columns: 1.2rem minmax(0, 1fr) !important;
+        gap: 0.38rem !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+      }
+      .slide.qa-discipline .discipline-marker {
+        width: 1.08rem !important;
+        height: 1.08rem !important;
+        font-size: 0.62rem !important;
       }
       .slide.qa-discipline .discipline-section h5 {
-        font-size: clamp(1rem, 1.88vw, 1.34rem) !important;
-        line-height: 1.34 !important;
-        margin-bottom: 0.24rem !important;
+        font-size: clamp(0.78rem, 1.25vw, 0.94rem) !important;
+        line-height: 1.28 !important;
+        margin-bottom: 0.12rem !important;
       }
       .slide.qa-discipline .scripture-ref {
-        font-size: 0.9rem !important;
-        margin-top: 0.24rem !important;
+        font-size: 0.66rem !important;
+        margin-top: 0.16rem !important;
       }
       .slide.qa-discipline .scripture-text,
       .slide.qa-discipline .discipline-note {
-        font-size: clamp(1rem, 1.88vw, 1.34rem) !important;
-        line-height: 1.36 !important;
+        font-size: clamp(0.72rem, 1.1vw, 0.86rem) !important;
+        line-height: 1.28 !important;
       }
       .practice-slide .slide-content {
         padding: 72px 58px 82px !important;
@@ -1012,43 +1021,55 @@
           </div>
           <div class="answer-container glass rounded-2xl p-5 md:p-6 mt-4 overflow-y-auto custom-scrollbar" style="max-height:50vh">
             <h4 class="text-terracotta font-bold text-sm mb-3">💡 查经要点</h4>
-            <div class="discipline-sections">
-              <div class="answer-point discipline-section">
-                <h5>1. 不是恨他、报复他</h5>
-                <p class="discipline-note">不是说恨他、报复他，而是不再把他当作一个正常悔改、顺服基督的弟兄来接纳在团契中。</p>
-                <span class="scripture-ref">帖撒罗尼迦后书 3:14–15</span>
-                <p class="scripture-text">若有人不听从我们这信上的话，要记下他，不和他交往，叫他自觉羞愧。<strong>但不要以他为仇人，要劝他如弟兄。</strong></p>
-              </div>
+            <ul class="discipline-sections">
+              <li class="answer-point discipline-section">
+                <span class="discipline-marker">1</span>
+                <div>
+                  <h5>不是恨他、报复他</h5>
+                  <p class="discipline-note">不是说恨他、报复他，而是不再把他当作一个正常悔改、顺服基督的弟兄来接纳在团契中。</p>
+                  <span class="scripture-ref">帖撒罗尼迦后书 3:14–15</span>
+                  <p class="scripture-text">若有人不听从我们这信上的话，要记下他，不和他交往，叫他自觉羞愧。<strong>但不要以他为仇人，要劝他如弟兄。</strong></p>
+                </div>
+              </li>
 
-              <div class="answer-point discipline-section">
-                <h5>2. 重新对待</h5>
-                <p class="discipline-note">不是恨他，而是不能继续假装他与主关系正常。他需要被当作需要悔改、需要重新回应福音的人来对待。</p>
-                <span class="scripture-ref">哥林多前书 5:11</span>
-                <p class="scripture-text">但如今我写信给你们说，若有称为弟兄是行淫乱的，或贪婪的，或拜偶像的，或辱骂的，或醉酒的，或勒索的，这样的人<strong>不可与他相交，就是与他吃饭都不可。</strong></p>
-                <p class="discipline-note">然后保罗继续说：</p>
-                <span class="scripture-ref">哥林多前书 5:13</span>
-                <p class="scripture-text">你们应当把那恶人从你们中间赶出去。</p>
-              </div>
+              <li class="answer-point discipline-section">
+                <span class="discipline-marker">2</span>
+                <div>
+                  <h5>重新对待</h5>
+                  <p class="discipline-note">不是恨他，而是不能继续假装他与主关系正常。他需要被当作需要悔改、需要重新回应福音的人来对待。</p>
+                  <span class="scripture-ref">哥林多前书 5:11</span>
+                  <p class="scripture-text">但如今我写信给你们说，若有称为弟兄是行淫乱的，或贪婪的，或拜偶像的，或辱骂的，或醉酒的，或勒索的，这样的人<strong>不可与他相交，就是与他吃饭都不可。</strong></p>
+                  <p class="discipline-note">然后保罗继续说：</p>
+                  <span class="scripture-ref">哥林多前书 5:13</span>
+                  <p class="scripture-text">你们应当把那恶人从你们中间赶出去。</p>
+                </div>
+              </li>
 
-              <div class="answer-point discipline-section">
-                <h5>3. 主餐不是随便领的</h5>
-                <span class="scripture-ref">哥林多前书 11:27–29</span>
-                <p class="scripture-text">所以，无论何人，不按理吃主的饼，喝主的杯，就是干犯主的身、主的血了。人应当自己省察，然后吃这饼、喝这杯。因为人吃喝，若不分辨是主的身体，就是吃喝自己的罪了。</p>
-                <p class="discipline-note">这里主要讲个人要省察自己，但也说明主餐不是随便领的。若一个人明知自己在罪中却拒绝悔改，继续领主餐就是很严重的事。</p>
-              </div>
+              <li class="answer-point discipline-section">
+                <span class="discipline-marker">3</span>
+                <div>
+                  <h5>主餐不是随便领的</h5>
+                  <span class="scripture-ref">哥林多前书 11:27–29</span>
+                  <p class="scripture-text">所以，无论何人，不按理吃主的饼，喝主的杯，就是干犯主的身、主的血了。人应当自己省察，然后吃这饼、喝这杯。因为人吃喝，若不分辨是主的身体，就是吃喝自己的罪了。</p>
+                  <p class="discipline-note">这里主要讲个人要省察自己，但也说明主餐不是随便领的。若一个人明知自己在罪中却拒绝悔改，继续领主餐就是很严重的事。</p>
+                </div>
+              </li>
 
-              <div class="answer-point discipline-section">
-                <h5>4. 保护圣洁：我们需要保护教会的圣洁</h5>
-                <span class="scripture-ref">加拉太书 5:9</span>
-                <p class="scripture-text">一点面酵能使全团都发起来。</p>
-                <p class="discipline-note">神呼召他的百姓圣洁。</p>
-                <span class="scripture-ref">彼得前书 1:15–16</span>
-                <p class="scripture-text">那召你们的既是圣洁，你们在一切所行的事上也要圣洁。因为经上记着说：“你们要圣洁，因为我是圣洁的。”</p>
-                <p class="discipline-note">基督爱教会，是要使教会圣洁无瑕。</p>
-                <span class="scripture-ref">以弗所书 5:25–27</span>
-                <p class="scripture-text">基督爱教会，为教会舍己。要用水藉着道把教会洗净，成为圣洁，可以献给自己，作个荣耀的教会，毫无玷污、皱纹等类的病，乃是圣洁没有瑕疵的。</p>
-              </div>
-            </div>
+              <li class="answer-point discipline-section">
+                <span class="discipline-marker">4</span>
+                <div>
+                  <h5>保护圣洁：我们需要保护教会的圣洁</h5>
+                  <span class="scripture-ref">加拉太书 5:9</span>
+                  <p class="scripture-text">一点面酵能使全团都发起来。</p>
+                  <p class="discipline-note">神呼召他的百姓圣洁。</p>
+                  <span class="scripture-ref">彼得前书 1:15–16</span>
+                  <p class="scripture-text">那召你们的既是圣洁，你们在一切所行的事上也要圣洁。因为经上记着说：“你们要圣洁，因为我是圣洁的。”</p>
+                  <p class="discipline-note">基督爱教会，是要使教会圣洁无瑕。</p>
+                  <span class="scripture-ref">以弗所书 5:25–27</span>
+                  <p class="scripture-text">基督爱教会，为教会舍己。要用水藉着道把教会洗净，成为圣洁，可以献给自己，作个荣耀的教会，毫无玷污、皱纹等类的病，乃是圣洁没有瑕疵的。</p>
+                </div>
+              </li>
+            </ul>
           </div>
           </div>
         </div>
@@ -1750,7 +1771,7 @@
         if (bg) {
           activeBgTween = gsap.fromTo(bg,
             { scale: 1.08, transformOrigin: '50% 50%' },
-            { scale: 1.02, duration: 12, ease: 'sine.inOut', repeat: -1, yoyo: true, overwrite: true });
+            { scale: 1.02, duration: 8, ease: 'sine.inOut', repeat: -1, yoyo: true, overwrite: true });
         }
         gsap.fromTo(ins, { opacity: 0, y: 34, filter: 'blur(10px)' },
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.08 });
