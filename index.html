@@ -138,6 +138,16 @@
     #intro-scrollcue .dot::after { content: ''; position: absolute; top: 7px; left: 50%; width: 4px; height: 8px;
       background: rgba(90,52,21,0.7); border-radius: 2px; transform: translateX(-50%); animation: cueMove 1.4s infinite; }
     @keyframes cueMove { 0% { opacity: 0; top: 7px; } 40% { opacity: 1; } 100% { opacity: 0; top: 22px; } }
+    .intro-music-btn { position: absolute; right: 24px; bottom: 28px; z-index: 8; width: 58px; height: 58px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center; pointer-events: auto; cursor: pointer;
+      background: rgba(42, 22, 10, 0.32); border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 16px 34px rgba(60,28,8,0.34); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      transition: transform .18s ease, opacity .25s ease, background .25s ease; opacity: .82; -webkit-tap-highlight-color: transparent; }
+    .intro-music-btn:hover { transform: scale(1.05); opacity: 1; }
+    .intro-music-btn:active { transform: scale(0.96); }
+    .intro-music-btn img { width: 72%; height: 72%; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,.35)); }
+    .intro-music-btn.is-playing { background: rgba(227, 106, 45, 0.42); border-color: rgba(255,255,255,0.32); opacity: 1; }
+    .intro-music-btn.is-playing img { animation: dvdSpin linear infinite; animation-duration: var(--spin-dur, 4s); }
 
     /* ===== iPad invisible click zones ===== */
     .nav-zone { position: fixed; top: 0; bottom: 0; z-index: 15; cursor: default; -webkit-tap-highlight-color: transparent; }
@@ -779,6 +789,9 @@
 
       <div id="intro-scrollcue">向下滚动<div class="dot"></div></div>
       <button id="intro-skip" class="absolute top-5 right-5 z-[8] glass-dark text-white/90 text-xs font-semibold px-4 py-2 rounded-full hover:text-white transition-colors" style="pointer-events:auto">直接进入 →</button>
+      <button id="intro-music-toggle" class="intro-music-btn" type="button" aria-label="播放开屏音乐" aria-pressed="false" title="播放/暂停音乐">
+        <img src="assets/dvd_icon.png" alt="">
+      </button>
     </div>
   </section>
 
@@ -1687,6 +1700,45 @@
       window.addEventListener('keydown', onKey);
     }
 
+    let introMusicPlaying = false;
+    function setIntroMusicButton(playing) {
+      const btn = document.getElementById('intro-music-toggle');
+      if (!btn) return;
+      btn.classList.toggle('is-playing', playing);
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.setAttribute('aria-label', playing ? '暂停开屏音乐' : '播放开屏音乐');
+    }
+    function stopIntroMusic(reset) {
+      const audio = document.getElementById('bgm1');
+      if (audio) {
+        audio.pause();
+        if (reset) audio.currentTime = 0;
+      }
+      introMusicPlaying = false;
+      setIntroMusicButton(false);
+    }
+    function toggleIntroMusic(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const audio = document.getElementById('bgm1');
+      if (!audio) return;
+      audio.loop = true;
+      audio.volume = 0.35;
+      if (introMusicPlaying && !audio.paused) {
+        stopIntroMusic(false);
+        return;
+      }
+      audio.play().then(function() {
+        introMusicPlaying = true;
+        setIntroMusicButton(true);
+      }).catch(function() {
+        introMusicPlaying = false;
+        setIntroMusicButton(false);
+      });
+    }
+
     /* ---------- Enter deck (warm mask-wipe transition) ---------- */
     let deckEntering = false;
     // Request real fullscreen. MUST be called synchronously inside a user
@@ -1731,6 +1783,7 @@
 
     function enterDeck() {
       if (deckEntering || document.body.classList.contains('deck-mode')) return;
+      stopIntroMusic(true);
       requestAppFullscreen();
       deckEntering = true;
       const wipe = document.getElementById('wipe');
@@ -2222,6 +2275,7 @@
 
     document.getElementById('enter-deck-btn').addEventListener('click', enterDeck);
     document.getElementById('intro-skip').addEventListener('click', enterDeck);
+    document.getElementById('intro-music-toggle').addEventListener('click', toggleIntroMusic);
     // Phones: skip the heavy multi-image marquee + zoom gesture; show a static
     // cover and let the user tap "进入查经" directly (avoids iOS texture thrash).
     const isMobileIntro = window.matchMedia('(max-width: 820px)').matches;
@@ -2273,6 +2327,7 @@
     }
 
     function playBgm(id) {
+      stopIntroMusic(true);
       if (activeBgm) { activeBgm.pause(); activeBgm.currentTime = 0; }
       var audio = document.getElementById(id);
       activeBgm = audio;
