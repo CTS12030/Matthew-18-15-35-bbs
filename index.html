@@ -1221,7 +1221,7 @@
                 <path class="aw-timer__ring" id="aw-ring" stroke-dasharray="283 283" d="M 50,50 m -45,0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"/>
               </svg>
               <div class="aw-timer__label">
-                <span class="aw-timer__time" id="aw-time">25:00</span>
+                <span class="aw-timer__time" id="aw-time">05:00</span>
               </div>
             </div>
           </div>
@@ -1420,7 +1420,7 @@
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
             <div class="glass-timer__digits" id="glass-digits">
-              <span class="gt-num" id="gt-m1">2</span><span class="gt-num" id="gt-m2">5</span>
+              <span class="gt-num" id="gt-m1">0</span><span class="gt-num" id="gt-m2">5</span>
               <span class="gt-sep">:</span>
               <span class="gt-num" id="gt-s1">0</span><span class="gt-num" id="gt-s2">0</span>
             </div>
@@ -2231,11 +2231,18 @@
     }
     updateCarousel();
 
-    /* ========== Discussion Timers (click-to-start, 25 min each) ========== */
-    const TIMER_SECS = 25 * 60;
+    /* ========== Discussion Timers (click-to-start, 5 min each) ========== */
+    const TIMER_SECS = 5 * 60;
     var activeBgm = null;
     var activeTimerIdx = -1;
     var timerEndTimeout = null;
+
+    function formatTimer(totalSeconds) {
+      var safe = Math.max(0, totalSeconds);
+      var m = Math.floor(safe / 60);
+      var s = safe % 60;
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
 
     function stopAllTimers() {
       if (timerEndTimeout) { clearTimeout(timerEndTimeout); timerEndTimeout = null; }
@@ -2300,9 +2307,7 @@
           targetValue: 0,
           countdown: true,
           format: function(v) {
-            var m = Math.floor(Math.max(0, v) / 60);
-            var s = Math.max(0, v) % 60;
-            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+            return formatTimer(v);
           }
         }),
         theme: theme({
@@ -2332,7 +2337,7 @@
         ring.setAttribute('stroke-dasharray', '283 283');
         ring.style.stroke = '';
       }
-      if (label) label.textContent = '25:00';
+      if (label) label.textContent = formatTimer(TIMER_SECS);
     }
     function startTimer2(el) {
       if (el.classList.contains('running')) { stopAllTimers(); return; }
@@ -2352,8 +2357,7 @@
         var frac = aw2.left / TIMER_SECS;
         frac = frac - (1 / TIMER_SECS) * (1 - frac);
         ring.setAttribute('stroke-dasharray', (Math.max(0, frac) * FULL).toFixed(1) + ' 283');
-        var m = Math.floor(aw2.left / 60), s = aw2.left % 60;
-        label.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        label.textContent = formatTimer(aw2.left);
         if (aw2.left <= 60) ring.style.stroke = '#f85149';
         else if (aw2.left <= 180) ring.style.stroke = '#f0883e';
       }, 1000);
@@ -2362,8 +2366,8 @@
     // --- Timer 3: Glassmorphism digits ---
     let gt3 = { left: TIMER_SECS, iv: null };
     function updateGlass() {
-      var m = Math.floor(Math.max(0, gt3.left) / 60), s = Math.max(0, gt3.left) % 60;
-      var ms = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+      var parts = formatTimer(gt3.left).split(':');
+      var ms = parts[0], ss = parts[1];
       document.getElementById('gt-m1').textContent = ms[0];
       document.getElementById('gt-m2').textContent = ms[1];
       document.getElementById('gt-s1').textContent = ss[0];
