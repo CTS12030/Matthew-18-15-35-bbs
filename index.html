@@ -1631,7 +1631,7 @@
         // no jump, and no dependency on measuring sizes after images load.
         col.innerHTML += col.innerHTML;
         const up = i % 2 === 0;
-        const dur = (26 + i * 4) * 2.5;   // 50% slower than the previous intro scroll
+        const dur = (26 + i * 4) * (2.5 / 0.7);   // another 30% slower than the previous intro scroll
         if (reduceMotion) { gsap.set(col, { yPercent: up ? -25 : 0 }); return; }
         const tw = gsap.fromTo(col,
           { yPercent: up ? 0 : -50 },
